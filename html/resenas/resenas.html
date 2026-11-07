@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reseñas de clientes · Worknet</title>
+
+  <!-- Tipografía del diseño de Figma: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../../css/pagina-resenas/resenas.css">
+</head>
+<body>
+
+  <div class="app-shell">
+
+    <!-- Botón de menú (solo se ve en celular) -->
+    <button class="mobile-menu-button" id="btn-menu" type="button" aria-label="Abrir menú" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- ============ BARRA LATERAL ============ -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-content">
+        <!-- Logo: solo el nombre, en el azul de la marca (variable --marca en el CSS) -->
+        <a class="worknet-logo" href="#inicio" data-prevenir>WORKNET</a>
+
+        <!-- Tarjeta de la cuenta -->
+        <section class="account-card">
+          <span class="avatar-fallback large">
+            <img class="icon" src="../../img/iconos/usuario-grande.svg" alt="">
+          </span>
+          <strong>Pepito perez</strong>
+          <span>Ingeniero de Software</span>
+          <span class="inline-location">
+            <img class="icon" src="../../img/iconos/ubicacion-11.svg" alt=""> Popayán · Cauca
+          </span>
+          <a href="#universidad" data-prevenir>Universidad del Cauca</a>
+        </section>
+
+        <!-- Navegación principal -->
+        <nav class="main-nav" aria-label="Navegación principal">
+          <button type="button" data-aviso="Abriendo Inicio">
+            <img class="icon" src="../../img/iconos/inicio.svg" alt=""> <span>Inicio</span>
+          </button>
+          <button type="button" data-aviso="Abriendo Mensajes">
+            <img class="icon" src="../../img/iconos/mensajes.svg" alt=""> <span>Mensajes</span>
+            <img class="icon notification-dot" src="../../img/iconos/punto-novedades.svg" alt="">
+          </button>
+          <button type="button" data-aviso="Abriendo Mi perfil">
+            <img class="icon" src="../../img/iconos/mi-perfil.svg" alt=""> <span>Mi perfil</span>
+          </button>
+        </nav>
+
+        <!-- Actividad -->
+        <section class="activity">
+          <span class="eyebrow">ACTIVIDAD</span>
+          <button type="button" data-aviso="Abriendo Generar recibo">
+            <img class="icon" src="../../img/iconos/grafica.svg" alt=""> <span>Generar recibo</span>
+          </button>
+        </section>
+      </div>
+    </aside>
+
+    <!-- ============ ÁREA PRINCIPAL ============ -->
+    <main class="main-area">
+
+      <!-- Barra superior -->
+      <header class="topbar">
+        <div class="breadcrumb">
+          <span>Worknet</span>
+          <img class="icon" src="../../img/iconos/chevron-derecha.svg" alt="">
+          <strong>Reseñas de clientes</strong>
+        </div>
+
+        <div class="account-actions">
+          <button class="location-button" type="button" data-aviso="Zona: Popayán, Cauca">
+            <img class="icon" src="../../img/iconos/ubicacion-16.svg" alt="">
+            <span>Popayán, Cauca</span>
+            <img class="icon" src="../../img/iconos/chevron-abajo-13.svg" alt="">
+          </button>
+          <span class="top-separator"></span>
+          <button class="icon-button" type="button" aria-label="Notificaciones" data-aviso="No tienes notificaciones nuevas">
+            <img class="icon" src="../../img/iconos/campana.svg" alt="">
+          </button>
+          <button class="mini-avatar" type="button" aria-label="Cuenta" data-aviso="Opciones de cuenta">
+            <img class="icon" src="../../img/iconos/usuario-pequeno.svg" alt="">
+          </button>
+          <img class="icon" src="../../img/iconos/chevron-abajo-14.svg" alt="">
+        </div>
+      </header>
+
+      <div class="page">
+
+        <!-- Título de la página -->
+        <header class="page-heading">
+          <h1>Reseñas de clientes</h1>
+          <p>Experiencias reales para elegir con confianza.</p>
+        </header>
+
+        <div class="content-grid">
+
+          <!-- Columna izquierda: el profesional -->
+          <aside class="professional-column">
+
+            <section class="professional-card">
+              <img class="professional-photo" src="../../img/fotos/carlos-gomez.jpg" alt="Carlos Gómez">
+
+              <div class="professional-identity">
+                <div class="verified-name">
+                  <h2>Carlos Gómez</h2>
+                  <img class="icon" src="../../img/iconos/verificado.svg" alt="Perfil verificado">
+                </div>
+                <a href="#plomero" data-prevenir>Plomero</a>
+                <span class="inline-location">
+                  <img class="icon" src="../../img/iconos/ubicacion-13.svg" alt=""> Popayán, Cauca
+                </span>
+              </div>
+
+              <div class="card-separator"></div>
+
+              <div class="rating-row">
+                <span class="stars" id="estrellas-perfil" aria-label="0 de 5 estrellas">
+                  <span class="star-empty">★</span><span class="star-empty">★</span><span class="star-empty">★</span><span class="star-empty">★</span><span class="star-empty">★</span>
+                </span>
+                <strong id="promedio-perfil">0.0/5</strong>
+              </div>
+
+              <button class="button secondary" type="button" data-aviso="Abriendo el perfil profesional de Carlos Gómez">
+                Ver perfil profesional
+              </button>
+
+              <span class="review-count" id="total-perfil">0 reseñas de clientes</span>
+
+              <button class="button primary" type="button" data-aviso="Abriendo conversación con Carlos Gómez">
+                <img class="icon" src="../../img/iconos/mensaje-blanco.svg" alt="">
+                Enviar mensaje
+              </button>
+            </section>
+
+            <section class="help-card">
+              <img class="icon" src="../../img/iconos/mensajes-azul.svg" alt="">
+              <h3>Cada experiencia cuenta.</h3>
+              <p>
+                Lee las opiniones y conversa con el especialista para resolver tus dudas antes de
+                contratar.
+              </p>
+            </section>
+          </aside>
+
+          <!-- Columna derecha: las reseñas -->
+          <section class="reviews-column">
+
+            <!-- Resumen de la valoración -->
+            <section class="summary-card">
+              <div class="global-score">
+                <div>
+                  <strong id="promedio-resenas">0.0</strong>
+                  <span>/ 5</span>
+                </div>
+                <p>Valoración general</p>
+              </div>
+
+              <span class="summary-separator"></span>
+
+              <div class="score-detail">
+                <div class="rating-row">
+                  <span class="stars" id="estrellas-resumen" aria-label="0 de 5 estrellas"></span>
+                  <strong id="promedio-detalle">0.0/5</strong>
+                </div>
+                <strong id="total-resenas">Basado en 0 reseñas</strong>
+                <p>Opiniones de clientes de Carlos Gómez.</p>
+              </div>
+            </section>
+
+            <form class="review-form" id="form-resena">
+              <h2>Dejar una reseña</h2>
+              <p>
+                Contrato de prueba: Ana contrató a Carlos Gómez para un servicio
+                de plomería. El ID y el nombre del cliente se completan automáticamente.
+              </p>
+              <div class="review-form-fields">
+                <label>
+                  Número de contrato
+                  <input name="contrato_id" type="number" min="1" required>
+                </label>
+                <label>
+                  Tu nombre
+                  <input name="cliente" type="text" maxlength="100" required>
+                </label>
+                <label>
+                  Calificación
+                  <select name="calificacion" required>
+                    <option value="">Elige una calificación</option>
+                    <option value="5">5 estrellas</option>
+                    <option value="4">4 estrellas</option>
+                    <option value="3">3 estrellas</option>
+                    <option value="2">2 estrellas</option>
+                    <option value="1">1 estrella</option>
+                  </select>
+                </label>
+                <label class="review-comment">
+                  Comentario
+                  <textarea name="comentario" rows="3" maxlength="1000" required></textarea>
+                </label>
+              </div>
+              <button class="review-submit" type="submit">Publicar reseña</button>
+              <p class="review-form-message" id="mensaje-form-resena" role="status" aria-live="polite" hidden></p>
+            </form>
+
+            <!-- Filtros y orden -->
+            <div class="filters">
+              <div class="filter-buttons" id="filtros" aria-label="Filtrar reseñas">
+                <button class="active" type="button" data-filtro="todas">Todas</button>
+                <button type="button" data-filtro="5">5 estrellas</button>
+                <button type="button" data-filtro="4">4 estrellas</button>
+              </div>
+
+              <label class="sort-control">
+                <span class="sr-only">Ordenar reseñas</span>
+                <select id="orden">
+                  <option value="destacadas">Destacadas</option>
+                  <option value="mayor">Mayor valoración</option>
+                  <option value="menor">Menor valoración</option>
+                </select>
+                <img class="icon" src="../../img/iconos/chevron-abajo-13.svg" alt="">
+              </label>
+            </div>
+
+            <!-- Las tarjetas de reseñas las dibuja js/resenas.js -->
+            <div class="review-list" id="lista-resenas"></div>
+
+            <!-- Contador y botón "Mostrar más" -->
+            <div class="pagination">
+              <span id="contador"></span>
+              <button type="button" id="btn-mas">
+                <img class="icon" src="../../img/iconos/flecha-abajo.svg" alt=""> Mostrar más
+              </button>
+            </div>
+          </section>
+        </div>
+
+        <button class="back-button" type="button" data-aviso="Volviendo al perfil de Carlos Gómez">
+          <img class="icon" src="../../img/iconos/flecha-izquierda.svg" alt=""> Volver al perfil de Carlos Gómez
+        </button>
+      </div>
+    </main>
+
+    <!-- Fondo oscuro del menú en celular -->
+    <button class="menu-backdrop" id="fondo-menu" type="button" aria-label="Cerrar menú"></button>
+
+    <!-- Mensaje flotante -->
+    <div class="notice" id="aviso" role="status" aria-live="polite"></div>
+  </div>
+
+  <script src="../../js/resenas.js"></script>
+</body>
+</html>
