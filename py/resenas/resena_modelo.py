@@ -1,4 +1,6 @@
 # resenas/resena_modelo.py
+# HU-E5-01
+
 # Solo la clase de datos. Nada de lógica aquí.
 
 from datetime import datetime
