@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generar Recibo de Acuerdo</title>
+
+    <link rel="stylesheet" href="css/GenerarRecibo.css">
+</head>
+
+<body>
+
+    <div class="contenedor-principal">
+
+        <!-- BARRA LATERAL -->
+        <aside class="sidebar">
+
+            <div class="logo">
+                <h1>💼</h1>
+            </div>
+
+            <div class="perfil">
+                <div class="usuario-icono">👤</div>
+                <h3>Pepito Perez</h3>
+                <p>Ingeniero de Software</p>
+                <p>📍 Popayán - Cauca</p>
+                <p>Universidad del Cauca</p>
+            </div>
+
+            <nav>
+                <a href="#">⌂ &nbsp; Inicio</a>
+                <a href="#">▢ &nbsp; Mensajes</a>
+                <a href="#">♙ &nbsp; Mi perfil</a>
+            </nav>
+
+            <div class="actividad">
+                <p>ACTIVIDAD</p>
+                <a href="#" class="activo">📈 &nbsp; Generar recibo</a>
+            </div>
+
+        </aside>
+
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="contenido">
+
+            <header class="barra-superior">
+                <p>Worknet &nbsp; > &nbsp; Recibos de acuerdos</p>
+
+                <div class="opciones">
+                    <span>📍 Popayán, Cauca</span>
+                    <span>♧</span>
+                    <span>👤</span>
+                </div>
+            </header>
+
+
+            <section class="pagina">
+
+                <a href="#" class="volver">← Volver a la conversación con Carlos</a>
+
+                <h1>Generar recibo de acuerdo</h1>
+
+                <p class="descripcion">
+                    Deja por escrito el servicio y las condiciones que acordaste con Carlos Gómez.
+                </p>
+
+                <div class="aviso">
+                    ⓘ &nbsp; Este recibo registra un acuerdo, no un pago.
+                    No acredita la entrega de dinero ni reemplaza una factura.
+                </div>
+
+
+                <div class="distribucion">
+
+                    <!-- FORMULARIO -->
+                    <section class="formulario">
+
+                        <form id="formRecibo">
+
+                            <!-- SECCION 1 -->
+                            <div class="seccion">
+
+                                <h3><span>1</span> ¿Quiénes acuerdan el servicio?</h3>
+
+                                <div class="fila">
+
+                                    <div class="campo">
+                                        <label>Cliente</label>
+                                        <input type="text" id="R0" >
+                                    </div>
+
+                                    <div class="campo">
+                                        <label>Profesional</label>
+
+                                        <input type="text" id="R1" >
+                                    </div>
+
+                                </div>
+
+                                <p class="ubicacion-perfil">
+                                    📍 Plomero - Popayán, Cauca
+                                </p>
+
+                            </div>
+
+
+                            <!-- SECCION 2 -->
+                            <div class="seccion">
+
+                                <h3><span>2</span> Servicio y alcance</h3>
+
+                                <div class="campo">
+                                    <label>Servicio acordado</label>
+                                    <input type="text" id="R2"
+                                        >
+                                </div>
+
+                                <div class="campo">
+                                    <label>¿Qué se va a realizar?</label>
+
+                                    <textarea id="R3" rows="3"></textarea>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- SECCION 3 -->
+                            <div class="seccion">
+
+                                <h3><span>3</span> Fecha y lugar del servicio</h3>
+
+                                <div class="fila">
+
+                                    <div class="campo">
+                                        <label>Fecha del servicio</label>
+                                        <input type="date" id="R4">
+                                    </div>
+
+                                    <div class="campo">
+                                        <label>Hora acordada</label>
+                                        <input type="time" id="R5" >
+                                    </div>
+
+                                </div>
+
+                                <div class="campo">
+                                    <label>Dirección</label>
+                                    <input type="text" id="R6"
+                                        >
+                                </div>
+
+                            </div>
+
+
+                            <!-- SECCION 4 -->
+                            <div class="seccion">
+
+                                <h3><span>4</span> Importe y condiciones acordadas</h3>
+
+                                <div class="fila">
+
+                                    <div class="campo">
+                                        <label>Importe total acordado</label>
+                                        <input type="number" id="R7" min="0"
+                                            >
+                                    </div>
+
+                                    
+
+                                </div>
+
+                                <div class="campo">
+                                    <label>Materiales, exclusiones y otras condiciones</label>
+
+                                    <textarea id="R9" rows="4"></textarea>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="nota-final">
+                                Revisa que los datos coincidan con lo conversado.
+                                Generar el recibo no implica la aceptación de la otra persona.
+                            </div>
+
+
+                            <div class="botones">
+                                <input type="button" value="Cancelar" id="cancelar"
+                                    onclick="cancelarRecibo()">
+
+                                <input type="button" value="Generar recibo"
+                                    id="generar" onclick="generarRecibo()">
+                            </div>
+
+                        </form>
+
+                    </section>
+
+
+                    <!-- VISTA PREVIA -->
+                    <section class="vista-previa">
+
+                        <h3>◉ &nbsp; Vista previa del recibo</h3>
+
+                        <div class="recibo">
+
+                            <div class="recibo-encabezado">
+
+                                <h2>worknet</h2>
+                                <span>ACUERDO DE SERVICIO</span>
+
+                            </div>
+
+                            <div class="linea-azul"></div>
+
+                            <h2>Recibo de acuerdo</h2>
+
+                            <p class="fecha-elaboracion">
+                                Elaborado el <span id="Pfecha"></span>
+                            </p>
+
+
+                            <div class="fila-recibo">
+
+                                <div>
+                                    <label>CLIENTE</label>
+                                    <p id="Pcliente"></p>
+                                </div>
+
+                                <div>
+                                    <label>PROFESIONAL</label>
+                                    <p id="Pprofesional"></p>
+                                    
+                                </div>
+
+                            </div>
+
+                            <hr>
+
+
+                            <div class="dato-recibo">
+                                <label>SERVICIO ACORDADO</label>
+                                <p id="Pservicio"></p>
+                            </div>
+
+
+                            <div class="dato-recibo">
+                                <label>ALCANCE DEL SERVICIO</label>
+                                <p id="Palcance">
+                                   
+                                </p>
+                            </div>
+
+
+                            <div class="fila-recibo">
+
+                                <div>
+                                    <label>FECHA DEL SERVICIO</label>
+                                    <p id="PfechaServicio"></p>
+                                </div>
+
+                                <div>
+                                    <label>HORA</label>
+                                    <p id="Phora"></p>
+                                </div>
+
+                            </div>
+
+
+                            <div class="dato-recibo">
+                                <label>LUGAR DEL SERVICIO</label>
+                                <p id="Plugar"></p>
+                            </div>
+
+
+                            <div class="importe">
+                                <span>Importe total acordado</span>
+                                <strong id="Pimporte"> <small>COP</small></strong>
+                            </div>
+
+
+                            <div class="dato-recibo">
+                                <label>CONDICIONES ACORDADAS</label>
+                                <p id="Pcondiciones">
+                                    
+                                </p>
+                            </div>
+
+                            <hr>
+
+                            <div class="advertencia-recibo">
+                                <strong>Este documento no es un comprobante de pago.</strong>
+
+                                <p>
+                                    Registra únicamente las condiciones del servicio.
+                                    No acredita entrega de dinero ni reemplaza una factura.
+                                    Su generación no implica la aceptación de la otra parte.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <input type="button" value="⬇ Descargar PDF al generar"
+                            id="descargar" onclick="descargarRecibo()">
+
+                    </section>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script src="JS/GenerarRecibo.js"></script>
+
+</body>
+</html>
