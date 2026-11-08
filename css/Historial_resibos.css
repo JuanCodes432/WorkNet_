@@ -1,0 +1,489 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #f3f6fb;
+    color: #1e2d45;
+}
+
+.contenedor-principal {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* BARRA LATERAL */
+
+.sidebar {
+    width: 180px;
+    background-color: white;
+    padding: 15px;
+    border-right: 1px solid #e2e8f0;
+    flex-shrink: 0;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.logo h1 {
+    font-size: 48px;
+}
+
+.perfil {
+    background-color: #f7f9fd;
+    border-radius: 15px;
+    padding: 18px 8px;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.usuario-icono {
+    background-color: #e2f4ff;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    margin: auto;
+    font-size: 25px;
+    padding: 7px;
+}
+
+.perfil h3 {
+    font-size: 13px;
+    margin: 10px 0 5px;
+}
+
+.perfil p {
+    font-size: 10px;
+    color: #77859a;
+    margin: 5px 0;
+}
+
+.perfil p:last-child {
+    color: #2864f0;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar nav a,
+.actividad a {
+    text-decoration: none;
+    color: #64748b;
+    font-size: 12px;
+    padding: 12px 8px;
+    border-radius: 9px;
+}
+
+.sidebar nav a:hover,
+.actividad a:hover {
+    background-color: #f0f4ff;
+}
+
+.actividad {
+    margin-top: 30px;
+}
+
+.actividad p {
+    font-size: 10px;
+    color: #94a3b8;
+    margin-bottom: 10px;
+}
+
+.actividad a {
+    display: block;
+}
+
+.actividad .activo {
+    background-color: #edf3ff;
+    color: #2463eb;
+    font-weight: bold;
+}
+
+
+/* BARRA SUPERIOR */
+
+.contenido {
+    flex: 1;
+    min-width: 0;
+}
+
+.barra-superior {
+    background-color: white;
+    height: 50px;
+    padding: 0 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e5eaf2;
+}
+
+.barra-superior p {
+    font-size: 11px;
+    color: #64748b;
+}
+
+.opciones {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    font-size: 12px;
+    color: #64748b;
+}
+
+
+/* PAGINA */
+
+.pagina {
+    padding: 30px;
+}
+
+.pagina h1 {
+    font-size: 24px;
+    color: #1e2d45;
+}
+
+.descripcion {
+    font-size: 12px;
+    color: #77859a;
+    margin-top: 8px;
+    margin-bottom: 25px;
+}
+
+
+/* ESTADISTICAS */
+
+.estadisticas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.tarjeta-estadistica {
+    background-color: white;
+    border: 1px solid #e1e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.icono-estadistica {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.azul {
+    background-color: #edf3ff;
+    color: #2864f0;
+}
+
+.verde {
+    background-color: #e8f9ef;
+    color: #16a34a;
+}
+
+.amarillo {
+    background-color: #fff7e6;
+    color: #d99a18;
+}
+
+.tarjeta-estadistica p {
+    color: #77859a;
+    font-size: 11px;
+    margin-bottom: 7px;
+}
+
+.tarjeta-estadistica h2 {
+    font-size: 22px;
+}
+
+
+/* HISTORIAL */
+
+.contenedor-historial {
+    background-color: white;
+    border: 1px solid #e1e8f0;
+    border-radius: 13px;
+    padding: 22px;
+}
+
+.encabezado-historial {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.encabezado-historial h2 {
+    font-size: 17px;
+}
+
+.encabezado-historial p {
+    font-size: 11px;
+    color: #8795aa;
+    margin-top: 7px;
+}
+
+.boton-generar {
+    text-decoration: none;
+    background-color: #2864f0;
+    color: white;
+    padding: 11px 16px;
+    border-radius: 8px;
+    font-size: 11px;
+}
+
+.boton-generar:hover {
+    background-color: #164bc7;
+}
+
+
+/* FILTROS */
+
+.filtros {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.buscador {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #dce4ef;
+    border-radius: 8px;
+    padding: 0 12px;
+    flex: 1;
+}
+
+.buscador span {
+    font-size: 20px;
+    color: #8290a5;
+}
+
+.buscador input {
+    border: none;
+    outline: none;
+    padding: 11px 0;
+    width: 100%;
+    font-size: 11px;
+}
+
+.filtros select {
+    border: 1px solid #dce4ef;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: white;
+    color: #64748b;
+    font-size: 11px;
+    outline: none;
+}
+
+
+/* TABLA */
+
+.tabla-contenedor {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 750px;
+}
+
+thead {
+    background-color: #f7f9fd;
+}
+
+th {
+    padding: 15px 10px;
+    text-align: left;
+    font-size: 10px;
+    color: #77859a;
+    font-weight: bold;
+}
+
+td {
+    padding: 16px 10px;
+    border-bottom: 1px solid #edf0f5;
+    font-size: 11px;
+    color: #35445b;
+}
+
+tbody tr:hover {
+    background-color: #f8faff;
+}
+
+.cliente {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #eaf1ff;
+    color: #2864f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.importe {
+    font-weight: bold;
+    color: #1e2d45;
+}
+
+
+/* ESTADOS */
+
+.estado {
+    padding: 6px 9px;
+    border-radius: 20px;
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+.confirmado {
+    background-color: #e8f9ef;
+    color: #168348;
+}
+
+.pendiente {
+    background-color: #fff6e5;
+    color: #c58b17;
+}
+
+.cancelado {
+    background-color: #ffeded;
+    color: #d34444;
+}
+
+
+/* ACCIONES */
+
+.accion {
+    background-color: #edf3ff;
+    color: #2864f0;
+    border: none;
+    padding: 7px 13px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 10px;
+}
+
+.accion:hover {
+    background-color: #dce8ff;
+}
+
+
+/* PIE DE TABLA */
+
+.pie-tabla {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pie-tabla p {
+    color: #8795aa;
+    font-size: 10px;
+}
+
+.paginacion {
+    display: flex;
+    gap: 5px;
+}
+
+.paginacion button {
+    border: 1px solid #e1e8f0;
+    background-color: white;
+    color: #64748b;
+    padding: 7px 11px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 10px;
+}
+
+.paginacion .pagina-activa {
+    background-color: #2864f0;
+    color: white;
+    border-color: #2864f0;
+}
+
+.paginacion button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 950px) {
+
+    .estadisticas {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .sidebar {
+        width: 65px;
+        padding: 8px;
+    }
+
+    .perfil,
+    .actividad p {
+        display: none;
+    }
+
+    .sidebar nav a,
+    .actividad a {
+        font-size: 0;
+        text-align: center;
+        padding: 12px 2px;
+    }
+
+    .barra-superior {
+        padding: 0 10px;
+    }
+
+    .pagina {
+        padding: 15px;
+    }
+
+    .filtros {
+        flex-direction: column;
+    }
+
+    .encabezado-historial {
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+}
