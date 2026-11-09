@@ -136,6 +136,20 @@ def consultar_resenas():
     except ValueError as error:
         return jsonify({"error": str(error)}), 400
 
+@app.get("/contrato")
+def pagina_contrato():
+    return send_from_directory(
+        RAIZ_PROYECTO,
+        "Contrato.html",
+    )
+
+
+@app.get("/historial-contratos")
+def pagina_historial_contratos():
+    return send_from_directory(
+        RAIZ_PROYECTO,
+        "historial_contratos.html",
+    )
 
 @app.post("/api/resenas")
 def crear_resena():
