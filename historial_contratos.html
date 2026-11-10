@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Historial de recibos</title>
+
+    <link rel="stylesheet" href="css/Historial_resibos.css">
+
+</head>
+
+<body>
+
+    <div class="contenedor-principal">
+
+        <!-- BARRA LATERAL -->
+
+        <aside class="sidebar">
+
+            <div class="logo">
+                <h1>💼</h1>
+            </div>
+
+            <div class="perfil">
+
+                <div class="usuario-icono">👤</div>
+
+                <h3>Pepito Perez</h3>
+
+                <p>Ingeniero de Software</p>
+                <p>📍 Popayán - Cauca</p>
+                <p>Universidad del Cauca</p>
+
+            </div>
+
+            <nav>
+
+                <a href="#">⌂ &nbsp; Inicio</a>
+                <a href="#">▢ &nbsp; Mensajes</a>
+                <a href="#">♙ &nbsp; Mi perfil</a>
+
+            </nav>
+
+            <div class="actividad">
+
+                <p>ACTIVIDAD</p>
+
+                <a href="#" class="activo">
+                    📄 &nbsp; Historial de recibos
+                </a>
+
+                <a href="#">
+                    ＋ &nbsp; Generar recibo
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- CONTENIDO PRINCIPAL -->
+
+        <main class="contenido">
+
+            <header class="barra-superior">
+
+                <p>Worknet &nbsp; > &nbsp; Historial de recibos</p>
+
+                <div class="opciones">
+
+                    <span>📍 Popayán, Cauca</span>
+                    <span>♧</span>
+                    <span>👤</span>
+
+                </div>
+
+            </header>
+
+
+            <section class="pagina">
+
+                <h1>Historial de recibos</h1>
+
+                <p class="descripcion">
+                    Consulta y administra los recibos de acuerdos
+                    generados con tus clientes.
+                </p>
+
+
+                <!-- ESTADISTICAS -->
+
+                <div class="estadisticas">
+
+                    <div class="tarjeta-estadistica">
+
+                        <div class="icono-estadistica azul">📄</div>
+
+                        <div>
+                            <p>Total de recibos</p>
+                            <h2 id="totalRecibos"></h2>
+                        </div>
+
+                    </div>
+
+
+                    <div class="tarjeta-estadistica">
+
+                        <div class="icono-estadistica verde">✓</div>
+
+                        <div>
+                            <p>Acuerdos confirmados</p>
+                            <h2 id="recibosConfirmados"></h2>
+                        </div>
+
+                    </div>
+
+
+                    <div class="tarjeta-estadistica">
+
+                        <div class="icono-estadistica amarillo">◷</div>
+
+                        <div>
+                            <p>Pendientes de confirmación</p>
+                            <h2 id="recibosPendientes"></h2>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LISTA DE RECIBOS -->
+
+                <div class="contenedor-historial">
+
+                    <div class="encabezado-historial">
+
+                        <div>
+                            <h2>Mis recibos</h2>
+
+                            <p>
+                                Lista de acuerdos de servicios registrados.
+                            </p>
+                        </div>
+
+                       <a href="/contrato" class="boton-generar">
+    + Generar recibo
+</a>
+
+                    </div>
+
+
+                    <!-- BUSCADOR Y FILTROS -->
+
+                    <div class="filtros">
+
+                        <div class="buscador">
+
+                            <span>⌕</span>
+
+                            <input type="text"
+                                id="buscarRecibo"
+                                placeholder="Buscar por cliente o servicio...">
+
+                        </div>
+
+
+                        <select id="filtroEstado">
+
+                            <option value="">Todos los estados</option>
+                            <option value="Confirmado">Confirmado</option>
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Cancelado">Cancelado</option>
+
+                        </select>
+
+
+                        <select id="filtroFecha">
+
+                            <option value="">Todas las fechas</option>
+                            <option value="2026">2026</option>
+                            <option value="2025">2025</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- TABLA -->
+
+                    <div class="tabla-contenedor">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>N.º RECIBO</th>
+                                    <th>CLIENTE</th>
+                                    <th>SERVICIO</th>
+                                    <th>FECHA</th>
+                                    <th>IMPORTE</th>
+                                    <th>ESTADO</th>
+                                    <th>ACCIONES</th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="listaRecibos">
+
+
+                                
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <!-- PIE DE TABLA -->
+
+                   
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script src="js/HistorialRecibos.js"></script>
+
+</body>
+
+</html>

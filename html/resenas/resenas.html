@@ -124,106 +124,12 @@
               <div class="card-separator"></div>
 
               <div class="rating-row">
-                <span class="stars" aria-label="4,5 de 5 estrellas">
-                  <span>★</span><span>★</span><span>★</span><span>★</span><img class="icon star-half" src="../../img/iconos/media-estrella.svg" alt="">
+                <span class="stars" id="estrellas-perfil" aria-label="0 de 5 estrellas">
+                  <span class="star-empty">★</span><span class="star-empty">★</span><span class="star-empty">★</span><span class="star-empty">★</span><span class="star-empty">★</span>
                 </span>
-                <strong>4.5/5</strong>
+                <strong id="promedio-perfil">0.0/5</strong>
               </div>
 
               <button class="button secondary" type="button" data-aviso="Abriendo el perfil profesional de Carlos Gómez">
                 Ver perfil profesional
               </button>
-
-              <span class="review-count">10 reseñas de clientes</span>
-
-              <button class="button primary" type="button" data-aviso="Abriendo conversación con Carlos Gómez">
-                <img class="icon" src="../../img/iconos/mensaje-blanco.svg" alt="">
-                Enviar mensaje
-              </button>
-            </section>
-
-            <section class="help-card">
-              <img class="icon" src="../../img/iconos/mensajes-azul.svg" alt="">
-              <h3>Cada experiencia cuenta.</h3>
-              <p>
-                Lee las opiniones y conversa con el especialista para resolver tus dudas antes de
-                contratar.
-              </p>
-            </section>
-          </aside>
-
-          <!-- Columna derecha: las reseñas -->
-          <section class="reviews-column">
-
-            <!-- Resumen de la valoración -->
-            <section class="summary-card">
-              <div class="global-score">
-                <div>
-                  <strong>4.5</strong>
-                  <span>/ 5</span>
-                </div>
-                <p>Valoración general</p>
-              </div>
-
-              <span class="summary-separator"></span>
-
-              <div class="score-detail">
-                <div class="rating-row">
-                  <span class="stars" aria-label="4,5 de 5 estrellas">
-                    <span>★</span><span>★</span><span>★</span><span>★</span><img class="icon star-half" src="../../img/iconos/media-estrella.svg" alt="">
-                  </span>
-                  <strong>4.5/5</strong>
-                </div>
-                <strong>Basado en 10 reseñas</strong>
-                <p>Opiniones de clientes de Carlos Gómez.</p>
-              </div>
-            </section>
-
-            <!-- Filtros y orden -->
-            <div class="filters">
-              <div class="filter-buttons" id="filtros" aria-label="Filtrar reseñas">
-                <button class="active" type="button" data-filtro="todas">Todas</button>
-                <button type="button" data-filtro="5">5 estrellas</button>
-                <button type="button" data-filtro="4">4 estrellas</button>
-              </div>
-
-              <label class="sort-control">
-                <span class="sr-only">Ordenar reseñas</span>
-                <select id="orden">
-                  <option value="destacadas">Destacadas</option>
-                  <option value="mayor">Mayor valoración</option>
-                  <option value="menor">Menor valoración</option>
-                </select>
-                <img class="icon" src="../../img/iconos/chevron-abajo-13.svg" alt="">
-              </label>
-            </div>
-
-            <!-- Las tarjetas de reseñas las dibuja js/main.js -->
-            <div class="review-list" id="lista-resenas"></div>
-
-            <!-- Contador y botón "Mostrar más" -->
-            <div class="pagination">
-              <span id="contador"></span>
-              <button type="button" id="btn-mas">
-                <img class="icon" src="../../img/iconos/flecha-abajo.svg" alt=""> Mostrar más
-              </button>
-            </div>
-          </section>
-        </div>
-
-        <button class="back-button" type="button" data-aviso="Volviendo al perfil de Carlos Gómez">
-          <img class="icon" src="../../img/iconos/flecha-izquierda.svg" alt=""> Volver al perfil de Carlos Gómez
-        </button>
-      </div>
-    </main>
-
-    <!-- Fondo oscuro del menú en celular -->
-    <button class="menu-backdrop" id="fondo-menu" type="button" aria-label="Cerrar menú"></button>
-
-    <!-- Mensaje flotante -->
-    <div class="notice" id="aviso" role="status" aria-live="polite"></div>
-  </div>
-
-  <script src="../../js/resenas.js"></script>
-</body>
-</html>
