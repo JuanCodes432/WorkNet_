@@ -122,3 +122,7 @@ function cancelarRecibo() {
         window.location.href = "/historial-contratos";
     }
 }
+
+function descargarRecibo() {
+    window.print();
+}

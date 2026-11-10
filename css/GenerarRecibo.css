@@ -508,3 +508,50 @@ body {
     }
 
 }
+
+@media print {
+    @page {
+        size: letter;
+        margin: 15mm;
+    }
+
+    body {
+        min-width: 0;
+        min-height: 0;
+        background: white;
+    }
+
+    body * {
+        visibility: hidden !important;
+    }
+
+    .vista-previa,
+    .vista-previa * {
+        visibility: visible !important;
+    }
+
+    .vista-previa {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        margin: 0;
+    }
+
+    .vista-previa h3,
+    #descargar {
+        display: none !important;
+    }
+
+    .recibo {
+        width: 100%;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .importe {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+}
