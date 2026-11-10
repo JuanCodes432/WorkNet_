@@ -36,3 +36,13 @@ reseñas se guardan en memoria y se reinician al detener el servidor.
 Las rutas POST y PATCH reciben JSON. Para probar la publicación desde la
 página, primero debe existir un contrato activo para el cliente y especialista
 indicados en el formulario.
+
+Al generar un recibo desde `/contrato`, el servidor crea el contrato y genera
+un PDF con el acuerdo. El navegador descarga el archivo
+`recibo-acuerdo-REC-<id>.pdf` en la carpeta de descargas configurada en el equipo.
+La generación del PDF está implementada en `py/contratos/contrato_pdf.py` y no
+requiere dependencias adicionales.
+
+El botón «Exportar a PDF» descarga la vista previa sin crear otro recibo.
+«Generar recibo» registra el acuerdo en el historial, descarga el PDF y abre el
+historial de recibos.

@@ -443,13 +443,9 @@ body {
     border: 1px solid #e1e8f0;
     border-radius: 9px;
     background-color: white;
-    color: #2864f0;
+    color: #64748b;
     font-size: 11px;
-    cursor: pointer;
-}
-
-#descargar:hover {
-    background-color: #edf3ff;
+    text-align: center;
 }
 
 

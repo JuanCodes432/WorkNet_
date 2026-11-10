@@ -1,6 +1,16 @@
 from pathlib import Path
+from io import BytesIO
+import math
 
-from flask import Flask, jsonify, redirect, request, send_from_directory
+from flask import (
+    Flask,
+    jsonify,
+    make_response,
+    redirect,
+    request,
+    send_file,
+    send_from_directory,
+)
 
 from contratos import (
     fn_consultar_contrato,
@@ -9,6 +19,7 @@ from contratos import (
     fn_historial_contratos,
     fn_modificar_contrato,
 )
+from contratos.contrato_pdf import generar_pdf_recibo
 from resenas import (
     fn_consultar_resenas_especialista,
     fn_crear_resena,
@@ -29,6 +40,45 @@ def _leer_datos_json():
 
 def _error_datos_invalidos():
     return jsonify({"error": "El cuerpo debe ser un objeto JSON válido"}), 400
+
+
+def _validar_datos_recibo(datos):
+    for campo in ("cliente", "especialista", "servicio"):
+        if not isinstance(datos.get(campo), str) or not datos[campo].strip():
+            raise ValueError(f"{campo.capitalize()} no puede estar vacío")
+
+    campos_texto = (
+        "cliente", "especialista", "servicio", "alcance",
+        "fecha", "hora", "direccion", "condiciones",
+    )
+    if any(not isinstance(datos.get(campo, ""), str) for campo in campos_texto):
+        raise ValueError("Los campos del recibo deben ser texto")
+
+    precio = datos.get("precio")
+    if isinstance(precio, bool) or not isinstance(precio, (int, float)):
+        raise ValueError("El precio debe ser un número mayor que cero")
+    try:
+        precio_valido = math.isfinite(precio) and precio > 0
+    except OverflowError:
+        precio_valido = False
+    if not precio_valido:
+        raise ValueError("El precio debe ser un número mayor que cero")
+
+
+def _respuesta_pdf_recibo(datos, numero, nombre_archivo):
+    contenido_pdf = generar_pdf_recibo(datos, numero)
+    respuesta = make_response(
+        send_file(
+            BytesIO(contenido_pdf),
+            mimetype="application/pdf",
+            as_attachment=True,
+            download_name=nombre_archivo,
+        )
+    )
+    if numero != "BORRADOR":
+        respuesta.headers["X-Contrato-Id"] = str(numero)
+        respuesta.headers["Access-Control-Expose-Headers"] = "X-Contrato-Id"
+    return respuesta
 
 
 @app.get("/")
@@ -80,6 +130,59 @@ def crear_contrato():
             datos.get("descripcion", ""),
         )
         return jsonify(contrato.a_diccionario()), 201
+    except ValueError as error:
+        return jsonify({"error": str(error)}), 400
+
+
+@app.post("/api/contratos/recibo")
+def crear_recibo_pdf():
+    datos = _leer_datos_json()
+    if datos is None:
+        return _error_datos_invalidos()
+
+    try:
+        _validar_datos_recibo(datos)
+    except ValueError as error:
+        return jsonify({"error": str(error)}), 400
+
+    descripcion = "\n".join([
+        f"Alcance: {datos.get('alcance', '')}",
+        f"Fecha del servicio: {datos.get('fecha', '')}",
+        f"Hora: {datos.get('hora', '')}",
+        f"Dirección: {datos.get('direccion', '')}",
+        f"Condiciones: {datos.get('condiciones', '')}",
+    ])
+
+    try:
+        contrato = fn_crear_contrato(
+            datos.get("cliente"),
+            datos.get("especialista"),
+            datos.get("servicio"),
+            datos.get("precio"),
+            descripcion,
+        )
+        return _respuesta_pdf_recibo(
+            datos,
+            contrato.id,
+            f"recibo-acuerdo-REC-{contrato.id}.pdf",
+        )
+    except ValueError as error:
+        return jsonify({"error": str(error)}), 400
+
+
+@app.post("/api/contratos/recibo/pdf")
+def exportar_recibo_pdf():
+    datos = _leer_datos_json()
+    if datos is None:
+        return _error_datos_invalidos()
+
+    try:
+        _validar_datos_recibo(datos)
+        return _respuesta_pdf_recibo(
+            datos,
+            "BORRADOR",
+            "recibo-acuerdo.pdf",
+        )
     except ValueError as error:
         return jsonify({"error": str(error)}), 400
 

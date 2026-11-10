@@ -53,67 +53,106 @@ function actualizarVistaPrevia() {
         new Date().toLocaleDateString("es-CO");
 }
 
-async function generarRecibo() {
-    const cliente = obtenerValor("R0");
-    const especialista = obtenerValor("R1");
-    const servicio = obtenerValor("R2");
-    const alcance = obtenerValor("R3");
-    const fecha = obtenerValor("R4");
-    const hora = obtenerValor("R5");
-    const direccion = obtenerValor("R6");
-    const precio = Number(obtenerValor("R7"));
-    const condiciones = obtenerValor("R9");
+function obtenerDatosRecibo() {
+    return {
+        cliente: obtenerValor("R0"),
+        especialista: obtenerValor("R1"),
+        servicio: obtenerValor("R2"),
+        alcance: obtenerValor("R3"),
+        fecha: obtenerValor("R4"),
+        hora: obtenerValor("R5"),
+        direccion: obtenerValor("R6"),
+        precio: Number(obtenerValor("R7")),
+        condiciones: obtenerValor("R9")
+    };
+}
 
+function validarDatosRecibo(datos) {
+    const { cliente, especialista, servicio, precio } = datos;
     if (!cliente || !especialista || !servicio) {
         alert("Completa los datos del cliente, profesional y servicio.");
-        return;
+        return false;
     }
 
     if (!Number.isFinite(precio) || precio <= 0) {
         alert("Ingresa un importe mayor que cero.");
-        return;
+        return false;
     }
 
-    // Se reúnen los campos adicionales en la descripción,
-    // porque el modelo actual no tiene atributos independientes para ellos.
-    const descripcion = [
-        `Alcance: ${alcance}`,
-        `Fecha del servicio: ${fecha}`,
-        `Hora: ${hora}`,
-        `Dirección: ${direccion}`,
-        `Condiciones: ${condiciones}`
-    ].join("\n");
+    return true;
+}
 
-    const datos = {
-        cliente,
-        especialista,
-        servicio,
-        precio,
-        descripcion
-    };
+async function solicitarDescargaPdf(ruta, nombreArchivo, datos) {
+    const respuesta = await fetch(ruta, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(datos)
+    });
 
-    try {
-        const respuesta = await fetch(API_CONTRATOS, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(datos)
-        });
+    const tipoRespuesta = respuesta.headers.get("Content-Type") || "";
+    if (!respuesta.ok || !tipoRespuesta.includes("application/pdf")) {
+        const cuerpo = await respuesta.text();
+        let mensaje = cuerpo;
 
-        const resultado = await respuesta.json();
-
-        if (!respuesta.ok) {
-            throw new Error(resultado.error || "Error al generar el recibo.");
+        if (tipoRespuesta.includes("application/json")) {
+            try {
+                mensaje = JSON.parse(cuerpo).error || cuerpo;
+            } catch (error) {
+                console.error("La API devolvió JSON inválido:", error);
+            }
         }
 
-        alert(`Recibo generado correctamente. Número: REC-${resultado.id}`);
+        throw new Error(
+            mensaje || `El servidor no pudo generar el PDF (HTTP ${respuesta.status}).`
+        );
+    }
 
+    const archivo = await respuesta.blob();
+    const url = URL.createObjectURL(archivo);
+    const enlace = document.createElement("a");
+    enlace.href = url;
+    enlace.download = nombreArchivo;
+    document.body.appendChild(enlace);
+    enlace.click();
+    enlace.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+    return respuesta.headers.get("X-Contrato-Id");
+}
+
+async function generarRecibo() {
+    const datos = obtenerDatosRecibo();
+    if (!validarDatosRecibo(datos)) return;
+
+    try {
+        const numero = await solicitarDescargaPdf(
+            `${API_CONTRATOS}/recibo`,
+            "recibo-acuerdo.pdf",
+            datos
+        );
+        alert(`Recibo REC-${numero} guardado en el historial y descargado.`);
         window.location.href = "/historial-contratos";
 
     } catch (error) {
         console.error(error);
-        alert(error.message);
+        alert(error instanceof Error ? error.message : "Error al generar el recibo.");
+    }
+}
+
+async function descargarRecibo() {
+    const datos = obtenerDatosRecibo();
+    if (!validarDatosRecibo(datos)) return;
+
+    try {
+        await solicitarDescargaPdf(
+            `${API_CONTRATOS}/recibo/pdf`,
+            "recibo-acuerdo.pdf",
+            datos
+        );
+    } catch (error) {
+        console.error(error);
+        alert(error instanceof Error ? error.message : "Error al exportar el PDF.");
     }
 }
 
