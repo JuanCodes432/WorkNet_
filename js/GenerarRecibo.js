@@ -1,5 +1,8 @@
 
 const API_CONTRATOS = "/api/contratos";
+const MENSAJE_SERVIDOR_INCORRECTO = "Inicia Flask con `python py\\api.py` "
+    + "y abre http://127.0.0.1:5000/contrato. No abras Contrato.html "
+    + "directamente ni uses Live Server.";
 
 document.addEventListener("DOMContentLoaded", () => {
     const campos = [
@@ -83,18 +86,24 @@ function validarDatosRecibo(datos) {
 }
 
 async function solicitarDescargaPdf(ruta, nombreArchivo, datos) {
-    const respuesta = await fetch(ruta, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(datos)
-    });
+    let respuesta;
+    try {
+        respuesta = await fetch(ruta, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(datos)
+        });
+    } catch (error) {
+        console.error("No se pudo conectar con la API:", error);
+        throw new Error(`No se pudo conectar con el backend. ${MENSAJE_SERVIDOR_INCORRECTO}`);
+    }
 
     const tipoRespuesta = respuesta.headers.get("Content-Type") || "";
     if (!respuesta.ok || !tipoRespuesta.includes("application/pdf")) {
         const cuerpo = await respuesta.text();
-        let mensaje = cuerpo;
+        let mensaje = "";
 
         if (tipoRespuesta.includes("application/json")) {
             try {
@@ -102,6 +111,9 @@ async function solicitarDescargaPdf(ruta, nombreArchivo, datos) {
             } catch (error) {
                 console.error("La API devolvió JSON inválido:", error);
             }
+        } else {
+            mensaje = "El servidor devolvió una página web en lugar del PDF. "
+                + MENSAJE_SERVIDOR_INCORRECTO;
         }
 
         throw new Error(

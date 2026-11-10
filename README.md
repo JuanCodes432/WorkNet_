@@ -9,14 +9,16 @@ repositorio y ejecuta:
 python -m pip install -r requirements.txt
 ```
 
-Inicia el servidor:
+Inicia el servidor desde la raíz del repositorio:
 
 ```powershell
 python py\api.py
 ```
 
-Abre <http://127.0.0.1:5000/> para ver la página de reseñas. La API y la página
-usan el mismo servidor; no abras el HTML con Live Server para esta prueba.
+Abre <http://127.0.0.1:5000/contrato> para generar y exportar recibos PDF.
+La API y el formulario deben usar el mismo servidor; no abras `Contrato.html`
+directamente ni uses Live Server. Para ver la página de reseñas, abre
+<http://127.0.0.1:5000/>.
 
 Al iniciar el servidor se carga un contrato de prueba para Ana y Carlos Gómez.
 El formulario completa automáticamente el ID del contrato y el nombre de Ana;
