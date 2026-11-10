@@ -18,10 +18,15 @@ python py\api.py
 Abre <http://127.0.0.1:5000/> para ver la página de reseñas. La API y la página
 usan el mismo servidor; no abras el HTML con Live Server para esta prueba.
 
-Al iniciar el servidor se carga un contrato de prueba para Ana y Carlos Gómez.
-El formulario completa automáticamente el ID del contrato y el nombre de Ana;
-solo debes elegir la calificación y escribir el comentario. Los contratos y las
+Al iniciar el servidor se cargan contratos de prueba para varios clientes y
+seis reseñas de ejemplo para Carlos Gómez. En el formulario puedes seleccionar
+un contrato todavía no reseñado para publicar otra opinión. Los contratos y las
 reseñas se guardan en memoria y se reinician al detener el servidor.
+
+En esta demostración, la cuenta actual es Pepito perez: solo sus contratos
+aparecen en el formulario y solo sus reseñas muestran acciones para editar o
+eliminar. La identidad está fijada para la demostración y no sustituye un
+sistema de inicio de sesión para una aplicación real.
 
 ## Rutas principales de la API
 

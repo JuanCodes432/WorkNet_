@@ -2,6 +2,7 @@ from pathlib import Path
 
 from flask import Flask, jsonify, redirect, request, send_from_directory
 
+import almacenamiento
 from contratos import (
     fn_consultar_contrato,
     fn_crear_contrato,
@@ -17,6 +18,67 @@ from resenas import (
 )
 
 RAIZ_PROYECTO = Path(__file__).resolve().parent.parent
+CLIENTE_ACTUAL = "Pepito perez"
+DATOS_DEMO = (
+    (
+        "Pepito perez",
+        "Revisión de grifería",
+        50000,
+        "Revisión y ajuste del grifo de la cocina",
+        4,
+        "Buen servicio, explicó el problema y lo solucionó rápido.",
+    ),
+    (
+        "Pepito perez",
+        "Instalación de lavaplatos",
+        90000,
+        "Instalación de un lavaplatos nuevo",
+        None,
+        None,
+    ),
+    ("Ana", "Plomería", 50000, "Reparación de una fuga de agua", None, None),
+    (
+        "María Fernanda",
+        "Instalación de lavamanos",
+        95000,
+        "Instalación y revisión de las conexiones",
+        5,
+        "Excelente servicio, llegó puntual y dejó todo funcionando.",
+    ),
+    (
+        "Julián",
+        "Reparación de tubería",
+        80000,
+        "Cambio de un tramo de tubería",
+        4,
+        "Solucionó el problema y explicó claramente el trabajo.",
+    ),
+    (
+        "Valentina",
+        "Mantenimiento de grifo",
+        45000,
+        "Mantenimiento de grifo de cocina",
+        5,
+        "Muy amable y cuidadoso. El grifo quedó como nuevo.",
+    ),
+    (
+        "Andrés",
+        "Destape de desagüe",
+        60000,
+        "Limpieza del desagüe del baño",
+        3,
+        "El trabajo quedó bien, aunque tomó un poco más de lo esperado.",
+    ),
+    (
+        "Camila",
+        "Instalación de ducha",
+        70000,
+        "Instalación de ducha nueva",
+        4,
+        "Buen trabajo y comunicación durante todo el servicio.",
+    ),
+    ("Santiago", "Revisión de tuberías", 55000, "Revisión general", None, None),
+)
 app = Flask(__name__)
 
 
@@ -29,6 +91,16 @@ def _leer_datos_json():
 
 def _error_datos_invalidos():
     return jsonify({"error": "El cuerpo debe ser un objeto JSON válido"}), 400
+
+
+def _error_si_resena_no_es_del_cliente_actual(resena_id):
+    resena = next(
+        (elemento for elemento in almacenamiento.resenas if elemento.id == resena_id),
+        None,
+    )
+    if resena is not None and resena.cliente != CLIENTE_ACTUAL:
+        return jsonify({"error": "Solo puedes modificar o eliminar tu propia reseña"}), 403
+    return None
 
 
 @app.get("/")
@@ -160,7 +232,7 @@ def crear_resena():
     try:
         resena = fn_crear_resena(
             datos.get("contrato_id"),
-            datos.get("cliente"),
+            CLIENTE_ACTUAL,
             datos.get("calificacion"),
             datos.get("comentario"),
         )
@@ -177,10 +249,14 @@ def modificar_resena(resena_id):
     if datos is None:
         return _error_datos_invalidos()
 
+    error_autoria = _error_si_resena_no_es_del_cliente_actual(resena_id)
+    if error_autoria is not None:
+        return error_autoria
+
     try:
         resena = fn_modificar_resena(
             resena_id,
-            datos.get("cliente"),
+            CLIENTE_ACTUAL,
             p_calificacion=datos.get("calificacion"),
             p_comentario=datos.get("comentario"),
         )
@@ -193,12 +269,12 @@ def modificar_resena(resena_id):
 
 @app.delete("/api/resenas/<int:resena_id>")
 def eliminar_resena(resena_id):
-    datos = _leer_datos_json()
-    if datos is None:
-        return _error_datos_invalidos()
+    error_autoria = _error_si_resena_no_es_del_cliente_actual(resena_id)
+    if error_autoria is not None:
+        return error_autoria
 
     try:
-        fn_eliminar_resena(resena_id, datos.get("cliente"))
+        fn_eliminar_resena(resena_id, CLIENTE_ACTUAL)
         return jsonify({"mensaje": "Reseña eliminada"})
     except ValueError as error:
         return jsonify({"error": str(error)}), 400
@@ -206,29 +282,66 @@ def eliminar_resena(resena_id):
         return jsonify({"error": str(error)}), 404
 
 
-def cargar_contrato_de_prueba():
-    for contrato in fn_historial_contratos():
-        if (
-            contrato.estado == "activo"
-            and contrato.cliente == "Ana"
-            and contrato.especialista == "Carlos Gómez"
-            and contrato.servicio == "Plomería"
-        ):
-            return contrato
+def cargar_datos_de_prueba():
+    contratos = []
+    resenas = []
+    for (
+        cliente,
+        servicio,
+        precio,
+        descripcion,
+        calificacion,
+        comentario,
+    ) in DATOS_DEMO:
+        contrato = next(
+            (
+                elemento
+                for elemento in fn_historial_contratos()
+                if elemento.estado == "activo"
+                and elemento.cliente == cliente
+                and elemento.especialista == "Carlos Gómez"
+                and elemento.servicio == servicio
+            ),
+            None,
+        )
+        if contrato is None:
+            contrato = fn_crear_contrato(
+                cliente,
+                "Carlos Gómez",
+                servicio,
+                precio,
+                descripcion,
+            )
+        contratos.append(contrato)
 
-    return fn_crear_contrato(
-        "Ana",
-        "Carlos Gómez",
-        "Plomería",
-        50000,
-        "Reparación de una fuga de agua",
-    )
+        if calificacion is not None and not any(
+            resena.contrato_id == contrato.id
+            for resena in almacenamiento.resenas
+        ):
+            resenas.append(
+                fn_crear_resena(
+                    contrato.id,
+                    cliente,
+                    calificacion,
+                    comentario,
+                )
+            )
+
+    return contratos, resenas
 
 
 if __name__ == "__main__":
-    contrato_demo = cargar_contrato_de_prueba()
+    contratos_demo, _ = cargar_datos_de_prueba()
+    contratos_con_resena = {
+        resena.contrato_id for resena in almacenamiento.resenas
+    }
+    contratos_disponibles = sum(
+        contrato.estado == "activo" and contrato.id not in contratos_con_resena
+        for contrato in contratos_demo
+    )
     print(
-        "Contrato de prueba listo: "
-        f"ID {contrato_demo.id}, cliente Ana, especialista Carlos Gómez"
+        f"{len(contratos_demo)} contratos de prueba y "
+        f"{len(almacenamiento.resenas)} reseñas de ejemplo listos "
+        f"({contratos_disponibles} contratos disponibles para reseñar)."
     )
     app.run(debug=True, use_reloader=False)
