@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inicio · Worknet</title>
+  <meta name="description" content="Encuentra especialistas locales para tu hogar y tus proyectos.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="Styles_Pagina_Principal.css">
+</head>
+<body>
+
+  <!-- Iconos (estilo Lucide, los mismos nombres que usa el diseño en Figma) -->
+  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></symbol>
+    <symbol id="i-user-round" viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></symbol>
+    <symbol id="i-users-round" viewBox="0 0 24 24"><path d="M18 21a8 8 0 0 0-16 0"/><circle cx="10" cy="8" r="5"/><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/></symbol>
+    <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6.001 6.001 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></symbol>
+    <symbol id="i-zap" viewBox="0 0 24 24"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></symbol>
+    <symbol id="i-laptop" viewBox="0 0 24 24"><path d="M18 5a2 2 0 0 1 2 2v8.526a2 2 0 0 0 .212.897l1.068 2.127a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45l1.068-2.127A2 2 0 0 0 4 15.526V7a2 2 0 0 1 2-2z"/><path d="M20.054 15.987H3.946"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
+    <symbol id="i-badge-check" viewBox="0 0 24 24"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-thumbs-up" viewBox="0 0 24 24"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/></symbol>
+    <symbol id="i-droplets" viewBox="0 0 24 24"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/></symbol>
+    <symbol id="i-house" viewBox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+    <symbol id="i-shield-check" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+  </svg>
+
+  <!-- Barra superior -->
+  <header class="topbar">
+    <nav class="breadcrumb" aria-label="Ruta de navegación">
+      <a href="Pagina_Principal.html">Worknet</a>
+      <svg class="icon icon--13" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+      <span aria-current="page">Inicio</span>
+    </nav>
+
+    <div class="account">
+      <label class="city city--header">
+        <svg class="icon icon--16 icon--primary" aria-hidden="true"><use href="#i-map-pin"/></svg>
+        <select id="city-header" aria-label="Zona" data-city-select></select>
+        <svg class="icon icon--13 icon--muted" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+      </label>
+
+      <span class="account__divider" aria-hidden="true"></span>
+
+      <button type="button" class="icon-btn icon-btn--bell" id="btn-notifications" aria-label="Notificaciones">
+        <svg class="icon icon--20" aria-hidden="true"><use href="#i-bell"/></svg>
+      </button>
+
+      <button type="button" class="avatar-btn" id="btn-account" aria-label="Menú de cuenta" aria-haspopup="menu">
+        <span class="avatar" aria-hidden="true">
+          <svg class="icon icon--20" aria-hidden="true"><use href="#i-user-round"/></svg>
+        </span>
+        <svg class="icon icon--14 icon--muted" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="page">
+
+    <!-- Bienvenida -->
+    <section class="welcome" aria-labelledby="welcome-title">
+      <div class="welcome__text">
+        <h1 id="welcome-title">Hola, <span id="user-name">Pepito</span> 👋</h1>
+        <p>El talento que necesitas está más cerca de lo que crees.</p>
+      </div>
+      <span class="pill">
+        <svg class="icon icon--13" aria-hidden="true"><use href="#i-users-round"/></svg>
+        Tu comunidad, conectada
+      </span>
+    </section>
+
+    <!-- Búsqueda de especialistas -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__top">
+        <div class="hero__copy">
+          <h2 id="hero-title">Encuentra manos expertas.<br>Resuelve con confianza.</h2>
+          <p>Conecta con especialistas locales para tu hogar y tus proyectos.</p>
+        </div>
+        <ul class="hero__trades" aria-hidden="true">
+          <li><svg class="icon icon--29" aria-hidden="true"><use href="#i-wrench"/></svg></li>
+          <li><svg class="icon icon--29" aria-hidden="true"><use href="#i-zap"/></svg></li>
+          <li><svg class="icon icon--29" aria-hidden="true"><use href="#i-laptop"/></svg></li>
+        </ul>
+      </div>
+
+      <form class="search" id="search-form" role="search" autocomplete="off">
+        <label class="search__service">
+          <svg class="icon icon--20 icon--primary" aria-hidden="true"><use href="#i-search"/></svg>
+          <input type="search" id="search-query" name="q" placeholder="¿Qué especialista necesitas?" aria-label="¿Qué especialista necesitas?" maxlength="80">
+        </label>
+        <span class="search__divider" aria-hidden="true"></span>
+        <label class="city city--search">
+          <svg class="icon icon--18 icon--muted" aria-hidden="true"><use href="#i-map-pin"/></svg>
+          <select id="city-search" name="city" aria-label="Ciudad" data-city-select></select>
+          <svg class="icon icon--14 icon--muted" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+        </label>
+        <button type="submit" class="btn btn--primary btn--lg">
+          <svg class="icon icon--17" aria-hidden="true"><use href="#i-search"/></svg>
+          Buscar especialistas
+        </button>
+      </form>
+    </section>
+
+    <!-- Te recomendamos -->
+    <section class="block" aria-labelledby="rec-title">
+      <div class="block__head">
+        <div>
+          <h2 id="rec-title">Te recomendamos</h2>
+          <p>Especialistas cerca de ti, listos para ayudarte.</p>
+        </div>
+        <a class="link-more" id="link-more-specialists" href="resultados.html">
+          Mostrar más
+          <svg class="icon icon--16" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+        </a>
+      </div>
+      <div class="cards" id="specialists" aria-live="polite" aria-busy="true"></div>
+    </section>
+
+    <!-- ¿Qué necesitas resolver? -->
+    <section class="block block--tight" aria-labelledby="cat-title">
+      <div class="block__head">
+        <h2 id="cat-title">¿Qué necesitas resolver?</h2>
+        <a class="link-more" href="especialidades.html">
+          Ver especialidades
+          <svg class="icon icon--16" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+        </a>
+      </div>
+      <ul class="categories" id="categories"></ul>
+    </section>
+
+    <!-- Confianza -->
+    <aside class="trust">
+      <p class="trust__msg">
+        <svg class="icon icon--23 icon--primary" aria-hidden="true"><use href="#i-shield-check"/></svg>
+        Conoce su perfil, consulta reseñas y conversa antes de decidir.
+      </p>
+      <a class="trust__link" href="como-funciona.html">Así funciona Worknet ↗</a>
+    </aside>
+
+  </main>
+
+  <script src="Java_Pagina_Principal.js"></script>
+</body>
+</html>
