@@ -15,6 +15,9 @@ python py\api.py
 
 Abre <http://127.0.0.1:5000/> y navega desde Inicio a Reseñas o Perfil. No abras
 las páginas mediante `file://` ni uses Live Server para esta demostración.
+También puedes abrir Crear perfil en
+<http://127.0.0.1:5000/Perfil%20Profesional/Crear_Perfil.html> o iniciar sesión
+en <http://127.0.0.1:5000/Perfil%20Profesional/Iniciar_Sesion.html>.
 
 El servidor usa `WORKNET_HOST` para elegir la dirección donde escucha. En
 producción configura `WORKNET_SECRET_KEY` con un valor secreto y
@@ -39,6 +42,8 @@ cargan únicamente cuando sus archivos correspondientes están vacíos.
 - `GET /resenas`: reseñas.
 - `GET /Perfil%20Profesional/Perfil_Profesional.html`: perfil profesional y
   páginas estáticas de esa carpeta.
+- `GET /Perfil%20Profesional/Crear_Perfil.html`: crear perfil y cuenta.
+- `GET /Perfil%20Profesional/Iniciar_Sesion.html`: inicio de sesión.
 - `GET /contrato`: generar contrato.
 - `GET /historial-contratos`: historial.
 - `GET /Cuenta%20Eliminada/cuenta_eliminada.html`: confirmación de cuenta

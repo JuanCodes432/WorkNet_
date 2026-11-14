@@ -252,6 +252,26 @@
     campo.input.addEventListener("change", limpiarMensaje);
   });
 
+  async function iniciarPagina() {
+    try {
+      const response = await fetch("/api/me/profile", {
+        headers: { Accept: "application/json" },
+        credentials: "same-origin",
+      });
+      if (response.ok) {
+        window.location.assign("/Perfil%20Profesional/Perfil_Profesional.html");
+        return;
+      }
+      if (response.status !== 401) {
+        mostrarMensaje("No se pudo comprobar la sesión. Inténtalo de nuevo.");
+      }
+    } catch {
+      mostrarMensaje("No se pudo comprobar la sesión. Inténtalo de nuevo.");
+    }
+
+    await cargarCiudades();
+  }
+
   form.addEventListener("submit", enviarFormulario);
-  cargarCiudades();
+  iniciarPagina();
 })();

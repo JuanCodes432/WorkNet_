@@ -80,17 +80,6 @@ function storeCity(city) {
   try { localStorage.setItem(CONFIG.CITY_STORAGE_KEY, city); } catch { /* sin almacenamiento */ }
 }
 
-function hasSessionHint() {
-  try {
-    const expiresAt = Number(localStorage.getItem(CONFIG.SESSION_EXPIRY_KEY));
-    if (expiresAt > Date.now()) return true;
-    localStorage.removeItem(CONFIG.SESSION_EXPIRY_KEY);
-  } catch {
-    return false;
-  }
-  return false;
-}
-
 function saveSessionHint() {
   try {
     localStorage.setItem(
@@ -604,11 +593,9 @@ async function init() {
   bindEvents();
 
   const [profileResult, citiesResult] = await Promise.all([
-    hasSessionHint()
-      ? Api.getProfile()
-        .then((profile) => ({ profile }))
-        .catch((error) => ({ error }))
-      : Promise.resolve({ error: new Error('HTTP 401') }),
+    Api.getProfile()
+      .then((profile) => ({ profile }))
+      .catch((error) => ({ error })),
     Api.getCities()
       .then((cities) => ({ cities }))
       .catch((error) => ({ error })),
@@ -628,14 +615,15 @@ async function init() {
     renderProfile(profileResult.profile);
   } else {
     state.authenticated = false;
-    if (profileResult.error.message === 'HTTP 401') clearSessionHint();
-    renderProfile(FALLBACK.profile);
     if (profileResult.error.message === 'HTTP 401') {
-      openAccountDialog('login');
-    } else {
-      console.error('[Worknet] No se pudo cargar el perfil:', profileResult.error);
-      showToast('No se pudo conectar. Inicia el servidor con python py\\api.py y abre http://127.0.0.1:5000/.');
+      clearSessionHint();
+      window.location.assign('/Perfil%20Profesional/Iniciar_Sesion.html');
+      document.body.classList.remove('is-loading');
+      return;
     }
+    renderProfile(FALLBACK.profile);
+    console.error('[Worknet] No se pudo cargar el perfil:', profileResult.error);
+    showToast('No se pudo conectar. Inicia el servidor con python py\\api.py y abre http://127.0.0.1:5000/.');
   }
   document.body.classList.remove('is-loading');
 }
