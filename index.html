@@ -2,11 +2,54 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="refresh" content="0; url=html/resenas/resenas.html">
-  <title>Worknet · Reseñas de clientes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inicio · WorkNet</title>
+  <link rel="stylesheet" href="/css/navegacion.css">
+  <style>
+    body { margin: 0; background: #f5f7fb; font-family: Inter, Arial, sans-serif; color: #17263c; }
+    main { max-width: 760px; margin: 64px auto; padding: 0 24px; }
+    h1 { color: #2463eb; }
+    p { line-height: 1.6; }
+    .inicio-enlaces { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+    .inicio-enlaces a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 12px 18px;
+      border: 1px solid #e7ecf3;
+      border-radius: 8px;
+      background: #fff;
+      color: #2463eb;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+    }
+    .inicio-enlaces a:visited { color: #2463eb; }
+    .inicio-enlaces a:hover { border-color: #c9d8f5; background: #edf3ff; }
+    .inicio-enlaces a:focus-visible { outline: 2px solid #2463eb; outline-offset: 2px; }
+  </style>
 </head>
 <body>
-  <p>Abriendo Worknet. Si no sucede automáticamente, <a href="html/resenas/resenas.html">entra a la página de reseñas</a>.</p>
+  <nav class="worknet-nav" aria-label="Navegación principal">
+    <a class="worknet-nav__brand" href="/">WorkNet</a>
+    <div class="worknet-nav__links">
+      <a href="/" aria-current="page">Inicio</a>
+      <a href="/resenas">Reseñas</a>
+      <a href="/Perfil%20Profesional/Perfil_Profesional.html" data-worknet-session>Perfil</a>
+      <a href="/Perfil%20Profesional/Crear_Perfil.html" data-worknet-guest>Crear perfil</a>
+      <a href="/Perfil%20Profesional/Iniciar_Sesion.html" data-worknet-guest>Iniciar sesión</a>
+      <a href="/Perfil%20Profesional/Iniciar_Sesion.html" data-worknet-logout>Cerrar sesión</a>
+    </div>
+  </nav>
+  <main>
+    <h1>Conecta con WorkNet</h1>
+    <p>Encuentra especialistas, consulta reseñas y administra tu perfil profesional.</p>
+    <div class="inicio-enlaces">
+      <a href="/resenas">Ver reseñas</a>
+      <a href="/Perfil%20Profesional/Perfil_Profesional.html">Abrir perfil profesional</a>
+    </div>
+  </main>
+  <script src="/js/navegacion_cuenta.js" defer></script>
 </body>
 </html>
