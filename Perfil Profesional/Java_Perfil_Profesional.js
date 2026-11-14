@@ -2,14 +2,14 @@
 const CONFIG = {
   DEFAULT_CITY: 'Popayán, Cauca',
   CITY_STORAGE_KEY: 'worknet:city',
-  ACCOUNT_DELETED_PAGE: '../Cuenta%20Eliminada/cuenta_eliminada.html',
-  // Páginas a las que navega el front (cámbialas por tus rutas reales)
+  SESSION_EXPIRY_KEY: 'worknet:session-expires',
+  ACCOUNT_DELETED_PAGE: '/Cuenta%20Eliminada/cuenta_eliminada.html',
   PAGES: {
-    home: 'Pagina_Principal.html',
-    messages: 'mensajes.html',
-    receipt: 'generar-recibo.html',
-    editProfile: 'editar-perfil.html',
-    visits: 'historial-visitas.html',
+    home: '/',
+    messages: '/resenas',
+    receipt: '/contrato',
+    editProfile: '/Perfil%20Profesional/Perfil_Profesional.html',
+    visits: '/historial-contratos',
   },
 };
 
@@ -78,6 +78,32 @@ function readStoredCity() {
 }
 function storeCity(city) {
   try { localStorage.setItem(CONFIG.CITY_STORAGE_KEY, city); } catch { /* sin almacenamiento */ }
+}
+
+function hasSessionHint() {
+  try {
+    const expiresAt = Number(localStorage.getItem(CONFIG.SESSION_EXPIRY_KEY));
+    if (expiresAt > Date.now()) return true;
+    localStorage.removeItem(CONFIG.SESSION_EXPIRY_KEY);
+  } catch {
+    return false;
+  }
+  return false;
+}
+
+function saveSessionHint() {
+  try {
+    localStorage.setItem(
+      CONFIG.SESSION_EXPIRY_KEY,
+      String(Date.now() + 7 * 24 * 60 * 60 * 1000),
+    );
+  } catch {
+    // The signed cookie remains the source of truth for the API.
+  }
+}
+
+function clearSessionHint() {
+  try { localStorage.removeItem(CONFIG.SESSION_EXPIRY_KEY); } catch { /* sin almacenamiento */ }
 }
 
 /* "Popayán, Cauca" → "Popayán · Cauca" (formato del menú lateral) */
@@ -299,6 +325,7 @@ async function submitAccountForm(event) {
       ? await Api.createAccount(email, password, profile)
       : profile;
 
+    saveSessionHint();
     state.authenticated = true;
     renderProfile(authenticatedProfile);
     closeAccountDialog();
@@ -323,6 +350,7 @@ async function logout() {
   button.disabled = true;
   try {
     await Api.logout();
+    clearSessionHint();
     state.authenticated = false;
     renderProfile(FALLBACK.profile);
     closeAccountDialog();
@@ -456,6 +484,7 @@ async function deleteAccount() {
   button.disabled = true;
   try {
     await Api.deleteAccount();
+    clearSessionHint();
     window.location.assign(CONFIG.ACCOUNT_DELETED_PAGE);
   } catch (error) {
     console.error('[Worknet] No se pudo eliminar la cuenta:', error);
@@ -575,9 +604,11 @@ async function init() {
   bindEvents();
 
   const [profileResult, citiesResult] = await Promise.all([
-    Api.getProfile()
-      .then((profile) => ({ profile }))
-      .catch((error) => ({ error })),
+    hasSessionHint()
+      ? Api.getProfile()
+        .then((profile) => ({ profile }))
+        .catch((error) => ({ error }))
+      : Promise.resolve({ error: new Error('HTTP 401') }),
     Api.getCities()
       .then((cities) => ({ cities }))
       .catch((error) => ({ error })),
@@ -597,12 +628,13 @@ async function init() {
     renderProfile(profileResult.profile);
   } else {
     state.authenticated = false;
+    if (profileResult.error.message === 'HTTP 401') clearSessionHint();
     renderProfile(FALLBACK.profile);
     if (profileResult.error.message === 'HTTP 401') {
       openAccountDialog('login');
     } else {
       console.error('[Worknet] No se pudo cargar el perfil:', profileResult.error);
-      showToast('No se pudo conectar. Inicia el servidor y abre la página desde http://127.0.0.1:8000.');
+      showToast('No se pudo conectar. Inicia el servidor con python py\\api.py y abre http://127.0.0.1:5000/.');
     }
   }
   document.body.classList.remove('is-loading');

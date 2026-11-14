@@ -1,5 +1,4 @@
 
-const RUTA_IMG = "../../img";
 const ESPECIALISTA = "Carlos Gómez";
 const CLIENTE_ACTUAL = document.getElementById("usuario-actual").textContent.trim();
 
@@ -53,11 +52,17 @@ function textoResenas(cantidad) {
   return `${cantidad} ${cantidad === 1 ? "reseña" : "reseñas"}`;
 }
 
-function dibujarAvatar(foto) {
+function dibujarAvatar(foto, nombre) {
   if (foto) {
     return `<img class="avatar-photo" src="${escaparHtml(foto)}" alt="">`;
   }
-  return `<span class="avatar-fallback"><img class="icon" src="${RUTA_IMG}/iconos/usuario-oscuro.svg" alt=""></span>`;
+  const iniciales = nombre
+    .split(/\s+/)
+    .map((parte) => parte[0] || "")
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+  return `<span class="avatar-fallback" aria-hidden="true">${iniciales}</span>`;
 }
 
 function dibujarResena(resena) {
@@ -101,7 +106,7 @@ function dibujarResena(resena) {
     <article class="review-card">
       <div class="review-head">
         <div class="reviewer">
-          ${dibujarAvatar(null)}
+          ${dibujarAvatar(null, resena.cliente)}
           <div>
             <strong>${nombre}</strong>
             <span>Cliente de ${escaparHtml(ESPECIALISTA)}</span>
@@ -115,7 +120,6 @@ function dibujarResena(resena) {
       <p class="review-quote">${comentario}</p>
       <button class="helpful-button ${esUtil ? "selected" : ""}" type="button"
               aria-pressed="${esUtil}" data-util="${id}">
-        <img class="icon" src="${RUTA_IMG}/iconos/me-resulta-util.svg" alt="">
         ${esUtil ? "Te resulta útil" : "Me resulta útil"}
       </button>
       ${accionesPropias}

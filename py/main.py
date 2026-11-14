@@ -52,7 +52,7 @@ def ejecutar_demo():
     )
 
     fn_eliminar_resena(v_resena1.id, "Ana")
-    print("Reseñas guardadas:", len(almacenamiento.resenas))
+    print("Reseñas guardadas:", len(almacenamiento.cargar("resenas")))
 
     v_pruebas = [
         ("calificación 9", lambda: fn_crear_resena(

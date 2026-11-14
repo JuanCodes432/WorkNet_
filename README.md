@@ -1,78 +1,70 @@
 # WorkNet
 
-## Backend de cuentas
+Demo universitaria para conectar clientes con especialistas. El sitio y todas
+las APIs se ejecutan en un solo servidor Flask y comparten el origen
+`http://127.0.0.1:5000/`.
 
-El servidor usa únicamente la biblioteca estándar de Python y SQLite. Desde la
-raíz del repositorio, ejecútalo con:
+## Instalación y arranque
 
-```powershell
-python backend\Gestionar_Cuenta.py
-```
-
-Luego abre `http://127.0.0.1:8000/Perfil%20Profesional/Perfil_Profesional.html`.
-La base de datos se crea automáticamente en `backend\worknet.sqlite3`.
-
-Abre las páginas desde ese servidor (no directamente como archivos `file://`)
-para que compartan el origen y puedan comunicarse con la API. La integración
-del perfil está en
-`Perfil Profesional\Conexion_Backend_Front_Perfil_Profesional.js`; la página
-de cuenta eliminada es una confirmación estática a la que se llega después de
-que el perfil solicita la eliminación a la API.
-
-### API
-
-- `POST /api/accounts`: crea una cuenta y abre su sesión. JSON: `email`,
-  `password` (mínimo 12 caracteres) y `profile` (perfil con `name`,
-  `profession`, `city` y `university`).
-- `POST /api/sessions`: inicia sesión con `email` y `password`.
-- `GET /api/me/profile`: devuelve el perfil de la sesión actual.
-- `PATCH /api/me/profile`: actualiza el perfil de la sesión actual con JSON.
-- `DELETE /api/me/account`: elimina la cuenta y cierra su sesión.
-- `GET /api/cities`: devuelve las ciudades disponibles.
-
-La sesión se guarda en una cookie `HttpOnly` y dura siete días. En producción,
-configura `WORKNET_COOKIE_SECURE=1`, `WORKNET_HOST` y `WORKNET_DB_PATH`, y sirve
-el sitio mediante HTTPS.
-
-
-## Ejecutar la aplicación
-
-Se necesita Python 3. Para instalar Flask, abre una terminal en la raíz del
-repositorio y ejecuta:
+Desde la raíz del repositorio:
 
 ```powershell
 python -m pip install -r requirements.txt
-```
-
-Inicia el servidor:
-
-```powershell
 python py\api.py
 ```
 
-Abre <http://127.0.0.1:5000/> para ver la página de reseñas. La API y la página
-usan el mismo servidor; no abras el HTML con Live Server para esta prueba.
+Abre <http://127.0.0.1:5000/> y navega desde Inicio a Reseñas o Perfil. No abras
+las páginas mediante `file://` ni uses Live Server para esta demostración.
 
-Al iniciar el servidor se cargan contratos de prueba para varios clientes y
-seis reseñas de ejemplo para Carlos Gómez. En el formulario puedes seleccionar
-un contrato todavía no reseñado para publicar otra opinión. Los contratos y las
-reseñas se guardan en memoria y se reinician al detener el servidor.
+El servidor usa `WORKNET_HOST` para elegir la dirección donde escucha. En
+producción configura `WORKNET_SECRET_KEY` con un valor secreto y
+`WORKNET_COOKIE_SECURE=1` al servir mediante HTTPS. El valor secreto por
+defecto solo es para desarrollo local.
 
-En esta demostración, la cuenta actual es Pepito perez: solo sus contratos
-aparecen en el formulario y solo sus reseñas muestran acciones para editar o
-eliminar. La identidad está fijada para la demostración y no sustituye un
-sistema de inicio de sesión para una aplicación real.
+## Datos
 
-## Rutas principales de la API
+`data/` contiene los JSON persistidos: `contratos.json`, `resenas.json`,
+`cuentas.json` y `contadores.json`. Se crean al usarse si todavía no existen;
+los cambios se escriben de forma segura para conservarlos entre reinicios. Las
+contraseñas se guardan como hashes. Los archivos de datos locales se ignoran
+en Git. Otros datos preexistentes, como `data/especialistas.json`, no se
+modifican.
 
-- `GET /api/contratos`: historial de contratos.
-- `POST /api/contratos`: crea un contrato.
-- `GET`, `PATCH` y `DELETE /api/contratos/<id>`: consulta, modifica y elimina
-  lógicamente un contrato.
-- `GET /api/resenas?especialista=Carlos%20Gómez`: consulta reseñas.
-- `POST /api/resenas`: crea una reseña.
-- `PATCH` y `DELETE /api/resenas/<id>`: modifica y elimina una reseña.
+Al arrancar, los contratos y las seis reseñas de ejemplo de Carlos Gómez se
+cargan únicamente cuando sus archivos correspondientes están vacíos.
 
-Las rutas POST y PATCH reciben JSON. Para probar la publicación desde la
-página, primero debe existir un contrato activo para el cliente y especialista
-indicados en el formulario.
+## Rutas web
+
+- `GET /`: inicio.
+- `GET /resenas`: reseñas.
+- `GET /Perfil%20Profesional/Perfil_Profesional.html`: perfil profesional y
+  páginas estáticas de esa carpeta.
+- `GET /contrato`: generar contrato.
+- `GET /historial-contratos`: historial.
+- `GET /Cuenta%20Eliminada/cuenta_eliminada.html`: confirmación de cuenta
+  eliminada.
+
+## API
+
+### Contratos (`py/contratos/contrato_rutas.py`)
+
+- `GET`, `POST /api/contratos`
+- `GET`, `PATCH`, `DELETE /api/contratos/<id>`
+
+### Reseñas (`py/resenas/resena_rutas.py`)
+
+- `GET /api/resenas?especialista=<nombre>`
+- `POST /api/resenas`
+- `PATCH`, `DELETE /api/resenas/<id>`
+
+### Cuentas (`py/cuentas/cuenta_rutas.py`)
+
+- `POST /api/accounts`: crea una cuenta e inicia sesión.
+- `POST /api/sessions`: inicia sesión.
+- `DELETE /api/me/session`: cierra sesión.
+- `GET`, `PATCH /api/me/profile`: consulta o actualiza el perfil.
+- `DELETE /api/me/account`: elimina la cuenta.
+- `GET /api/cities`: consulta ciudades disponibles.
+
+Las rutas POST y PATCH reciben un objeto JSON. Las sesiones usan una cookie
+firmada HttpOnly con duración de siete días.

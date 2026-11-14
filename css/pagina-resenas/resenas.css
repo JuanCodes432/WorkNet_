@@ -146,6 +146,8 @@ a:focus-visible {
   overflow: hidden;
   border-radius: 999px;
   background: var(--fondo-suave);
+  color: var(--primario);
+  font-weight: 700;
 }
 
 .avatar-fallback.large {
@@ -387,10 +389,15 @@ a:focus-visible {
 }
 
 .professional-photo {
+  display: grid;
   width: 96px;
   height: 96px;
+  place-items: center;
   border-radius: 999px;
-  object-fit: cover;
+  background: var(--celeste);
+  color: var(--primario);
+  font-size: 28px;
+  font-weight: 700;
 }
 
 .professional-identity {

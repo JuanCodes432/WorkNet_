@@ -1,7 +1,7 @@
 (function iniciarPantallaCuentaEliminada() {
   "use strict";
 
-  const PAGINA_DE_INICIO = "../Perfil%20Profesional/Perfil_Profesional.html";
+  const PAGINA_DE_INICIO = "/";
 
   const elementoTituloConfirmacion = document.getElementById("titulo-confirmacion");
   const elementoAnioActual = document.getElementById("anio-actual");
@@ -14,6 +14,7 @@
       window.sessionStorage.clear();
       window.localStorage.removeItem("tokenDeSesion");
       window.localStorage.removeItem("usuarioActual");
+      window.localStorage.removeItem("worknet:session-expires");
     } catch (errorDeAlmacenamiento) {
       // El navegador puede bloquear el almacenamiento (modo privado, por ejemplo).
       // No es crítico para mostrar la pantalla.

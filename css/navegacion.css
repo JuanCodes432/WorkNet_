@@ -1,0 +1,63 @@
+.worknet-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 52px;
+  padding: 8px 24px;
+  background: #fff;
+  border-bottom: 1px solid #e7ecf3;
+  color: #17263c;
+  font: 14px/1.3 Inter, Arial, sans-serif;
+}
+
+.worknet-nav__brand {
+  color: #2463eb;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.worknet-nav__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.worknet-nav__links a {
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.worknet-nav__links a:hover,
+.worknet-nav__links a:focus-visible {
+  background: #edf3ff;
+  color: #2463eb;
+}
+
+.worknet-nav + .app-shell .sidebar {
+  top: 52px;
+}
+
+.worknet-nav + .layout .sidebar {
+  top: 52px;
+  height: calc(100vh - 52px);
+}
+
+@media (max-width: 520px) {
+  .worknet-nav {
+    gap: 8px;
+    padding: 8px 12px;
+  }
+
+  .worknet-nav__links {
+    gap: 0;
+  }
+
+  .worknet-nav__links a {
+    padding: 8px 7px;
+  }
+}

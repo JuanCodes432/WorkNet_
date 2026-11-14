@@ -2,11 +2,34 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="refresh" content="0; url=html/resenas/resenas.html">
-  <title>Worknet · Reseñas de clientes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WorkNet</title>
+  <link rel="stylesheet" href="/css/navegacion.css">
+  <style>
+    body { margin: 0; background: #f5f7fb; font-family: Inter, Arial, sans-serif; color: #17263c; }
+    main { max-width: 760px; margin: 64px auto; padding: 0 24px; }
+    h1 { color: #2463eb; }
+    p { line-height: 1.6; }
+    .inicio-enlaces { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+    .inicio-enlaces a { padding: 12px 18px; border-radius: 8px; background: #fff; color: #2463eb; }
+  </style>
 </head>
 <body>
-  <p>Abriendo Worknet. Si no sucede automáticamente, <a href="html/resenas/resenas.html">entra a la página de reseñas</a>.</p>
+  <nav class="worknet-nav" aria-label="Navegación principal">
+    <a class="worknet-nav__brand" href="/">WorkNet</a>
+    <div class="worknet-nav__links">
+      <a href="/">Inicio</a>
+      <a href="/resenas">Reseñas</a>
+      <a href="/Perfil%20Profesional/Perfil_Profesional.html">Perfil</a>
+    </div>
+  </nav>
+  <main>
+    <h1>Conecta con WorkNet</h1>
+    <p>Encuentra especialistas, consulta reseñas y administra tu perfil profesional.</p>
+    <div class="inicio-enlaces">
+      <a href="/resenas">Ver reseñas</a>
+      <a href="/Perfil%20Profesional/Perfil_Profesional.html">Abrir perfil profesional</a>
+    </div>
+  </main>
 </body>
 </html>
