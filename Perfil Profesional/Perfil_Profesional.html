@@ -104,7 +104,7 @@
             <svg class="icon icon--20" aria-hidden="true"><use href="#i-bell"/></svg>
           </button>
 
-          <button type="button" class="avatar-btn" id="btn-account" aria-label="Menú de cuenta" aria-haspopup="menu">
+          <button type="button" class="avatar-btn" id="btn-account" aria-label="Acceder o administrar cuenta">
             <span class="avatar avatar--34" aria-hidden="true">
               <svg class="icon icon--20" aria-hidden="true"><use href="#i-user-round"/></svg>
             </span>
@@ -121,10 +121,12 @@
             <h1>Perfil profesional</h1>
             <p>Conoce a la persona detrás de cada solución.</p>
           </div>
-          <a class="btn btn--outline btn--sm" data-page="editProfile" href="editar-perfil.html">
+          <button type="button" class="btn btn--outline btn--sm" id="btn-edit-profile">
             <svg class="icon icon--17" aria-hidden="true"><use href="#i-pencil"/></svg>
             Editar perfil
-          </a>
+          </button>
+          <button type="button" class="btn btn--outline btn--sm" id="btn-cancel-edit" hidden>Cancelar</button>
+          <button type="button" class="btn btn--primary btn--sm" id="btn-save-profile" hidden>Guardar cambios</button>
         </div>
 
         <!-- Presentación profesional -->
@@ -239,12 +241,67 @@
           </section>
         </div>
 
+        <section class="account-danger" aria-labelledby="delete-account-title">
+          <div>
+            <h2 id="delete-account-title">Eliminar cuenta</h2>
+            <p>Esta acción es permanente y no se puede deshacer.</p>
+          </div>
+          <button type="button" class="btn btn--danger btn--sm" id="btn-delete-account">Eliminar cuenta</button>
+        </section>
+
       </main>
     </div>
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+  <dialog class="account-dialog" id="account-dialog" aria-labelledby="account-dialog-title">
+    <form class="account-form" id="account-form">
+      <div class="account-form__head">
+        <div>
+          <h2 id="account-dialog-title">Tu cuenta Worknet</h2>
+          <p>Inicia sesión o crea una cuenta para administrar tu perfil.</p>
+        </div>
+        <button type="button" class="account-form__close" id="btn-close-account" aria-label="Cerrar">×</button>
+      </div>
+
+      <div class="account-form__modes" role="group" aria-label="Acceso a la cuenta">
+        <button type="button" class="account-form__mode is-active" data-auth-mode="login">Iniciar sesión</button>
+        <button type="button" class="account-form__mode" data-auth-mode="create">Crear cuenta</button>
+      </div>
+
+      <label class="account-form__field">
+        Correo electrónico
+        <input type="email" id="auth-email" autocomplete="email" required maxlength="254">
+      </label>
+      <label class="account-form__field">
+        Contraseña
+        <input type="password" id="auth-password" autocomplete="current-password" required minlength="12" maxlength="1024">
+        <span>Debe tener al menos 12 caracteres.</span>
+      </label>
+
+      <div class="account-form__registration" id="registration-fields" hidden>
+        <label class="account-form__field">Nombre
+          <input type="text" id="auth-name" autocomplete="name" maxlength="120">
+        </label>
+        <label class="account-form__field">Profesión
+          <input type="text" id="auth-profession" maxlength="160">
+        </label>
+        <label class="account-form__field">Ciudad
+          <input type="text" id="auth-city" maxlength="160">
+        </label>
+        <label class="account-form__field">Universidad
+          <input type="text" id="auth-university" maxlength="200">
+        </label>
+      </div>
+
+      <p class="account-form__error" id="auth-error" role="alert" hidden></p>
+      <button type="submit" class="btn btn--primary btn--sm account-form__submit" id="btn-auth-submit">Iniciar sesión</button>
+      <button type="button" class="btn btn--outline btn--sm account-form__logout" id="btn-logout" hidden>Cerrar sesión</button>
+    </form>
+  </dialog>
+
+  <script src="Conexion_Backend_Front_Perfil_Profesional.js"></script>
   <script src="Java_Perfil_Profesional.js"></script>
 </body>
 </html>

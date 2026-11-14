@@ -1,9 +1,8 @@
 
 const CONFIG = {
-  API_BASE_URL: '/api',
-  REQUEST_TIMEOUT_MS: 6000,
   DEFAULT_CITY: 'Popayán, Cauca',
   CITY_STORAGE_KEY: 'worknet:city',
+  ACCOUNT_DELETED_PAGE: '../Cuenta%20Eliminada/cuenta_eliminada.html',
   // Páginas a las que navega el front (cámbialas por tus rutas reales)
   PAGES: {
     home: 'Pagina_Principal.html',
@@ -86,43 +85,7 @@ function placeForSidebar(city) {
   return String(city ?? '').replace(/\s*,\s*/, ' · ');
 }
 
-/* ==========================================================================
-   API  (aquí se conecta el backend)
-   ========================================================================== */
-
-async function api(path, options = {}) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), CONFIG.REQUEST_TIMEOUT_MS);
-
-  try {
-    const response = await fetch(`${CONFIG.API_BASE_URL}${path}`, {
-      credentials: 'include',
-      ...options,
-      headers: { Accept: 'application/json', ...(options.headers || {}) },
-      signal: controller.signal,
-    });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    return response.status === 204 ? null : await response.json();
-  } finally {
-    clearTimeout(timer);
-  }
-}
-
-/* Intenta el backend; si falla, devuelve los datos de ejemplo */
-async function withFallback(request, fallback) {
-  try {
-    const data = await request();
-    return data ?? fallback;
-  } catch (error) {
-    console.info('[Worknet] Backend no disponible, usando datos de ejemplo:', error.message);
-    return fallback;
-  }
-}
-
-const Api = {
-  getProfile: () => withFallback(() => api('/me/profile'), FALLBACK.profile),
-  getCities: () => withFallback(() => api('/cities'), FALLBACK.cities),
-};
+const Api = window.WorkNetApi;
 
 /* ==========================================================================
    Render
@@ -131,6 +94,8 @@ const Api = {
 const state = {
   city: CONFIG.DEFAULT_CITY,
   profile: FALLBACK.profile,
+  authenticated: false,
+  authMode: 'login',
 };
 
 function setText(selector, value) {
@@ -280,6 +245,226 @@ function showToast(message) {
   toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 2600);
 }
 
+function setAuthMode(mode) {
+  state.authMode = mode;
+  const creating = mode === 'create';
+  $('#registration-fields').hidden = !creating;
+  ['#auth-name', '#auth-profession', '#auth-city', '#auth-university'].forEach((selector) => {
+    $(selector).required = creating;
+  });
+  $('#auth-password').autocomplete = creating ? 'new-password' : 'current-password';
+  $('#btn-auth-submit').textContent = creating ? 'Crear cuenta' : 'Iniciar sesión';
+  $('[data-auth-mode="login"]').classList.toggle('is-active', !creating);
+  $('[data-auth-mode="create"]').classList.toggle('is-active', creating);
+  $('#auth-error').hidden = true;
+}
+
+function openAccountDialog(mode = 'login') {
+  const dialog = $('#account-dialog');
+  setAuthMode(mode);
+  dialog.classList.toggle('is-authenticated', state.authenticated);
+  $('#btn-logout').hidden = !state.authenticated;
+  $('#btn-auth-submit').hidden = state.authenticated;
+  $('.account-form__modes').hidden = state.authenticated;
+  $$('.account-form__field').forEach((field) => {
+    field.hidden = state.authenticated;
+  });
+  if (!dialog.open) dialog.showModal();
+}
+
+function closeAccountDialog() {
+  $('#account-dialog').close();
+}
+
+async function submitAccountForm(event) {
+  event.preventDefault();
+  const submitButton = $('#btn-auth-submit');
+  const errorMessage = $('#auth-error');
+  submitButton.disabled = true;
+  errorMessage.hidden = true;
+
+  try {
+    const email = $('#auth-email').value.trim();
+    const password = $('#auth-password').value;
+    const profile = state.authMode === 'create'
+      ? {
+          ...FALLBACK.profile,
+          name: $('#auth-name').value.trim(),
+          profession: $('#auth-profession').value.trim(),
+          city: $('#auth-city').value.trim(),
+          university: $('#auth-university').value.trim(),
+        }
+      : await Api.login(email, password);
+    const authenticatedProfile = state.authMode === 'create'
+      ? await Api.createAccount(email, password, profile)
+      : profile;
+
+    state.authenticated = true;
+    renderProfile(authenticatedProfile);
+    closeAccountDialog();
+    showToast(state.authMode === 'create' ? 'Cuenta creada' : 'Sesión iniciada');
+  } catch (error) {
+    console.error('[Worknet] No se pudo acceder a la cuenta:', error);
+    errorMessage.textContent = error.message.startsWith('HTTP ')
+      ? error.message === 'HTTP 409'
+        ? 'Ya existe una cuenta con ese correo electrónico.'
+        : error.message === 'HTTP 401'
+          ? 'Correo o contraseña incorrectos.'
+          : 'No se pudo completar la solicitud.'
+      : 'No se pudo conectar con el servidor. Comprueba que esté iniciado.';
+    errorMessage.hidden = false;
+  } finally {
+    submitButton.disabled = false;
+  }
+}
+
+async function logout() {
+  const button = $('#btn-logout');
+  button.disabled = true;
+  try {
+    await Api.logout();
+    state.authenticated = false;
+    renderProfile(FALLBACK.profile);
+    closeAccountDialog();
+    showToast('Sesión cerrada');
+  } catch (error) {
+    console.error('[Worknet] No se pudo cerrar la sesión:', error);
+    $('#auth-error').textContent = 'No se pudo cerrar la sesión. Inténtalo de nuevo.';
+    $('#auth-error').hidden = false;
+  } finally {
+    button.disabled = false;
+  }
+}
+
+function addProfileField(container, key, label, value, multiline = false) {
+  const field = document.createElement(multiline ? 'textarea' : 'input');
+  field.className = `profile-field${multiline ? ' profile-field--multiline' : ''}`;
+  field.setAttribute('aria-label', label);
+  field.dataset.profileField = key;
+  field.value = value ?? '';
+  container.replaceChildren(field);
+}
+
+function setProfileEditing(editing) {
+  $('#btn-edit-profile').hidden = editing;
+  $('#btn-cancel-edit').hidden = !editing;
+  $('#btn-save-profile').hidden = !editing;
+  if (!editing) {
+    renderProfile(state.profile);
+    return;
+  }
+
+  const fields = [
+    ['#cover-eyebrow', 'coverEyebrow', 'Texto superior de portada'],
+    ['#cover-title', 'coverTitle', 'Título de portada'],
+    ['#profile-name', 'name', 'Nombre'],
+    ['#profile-role', 'profession', 'Profesión'],
+    ['#profile-city', 'city', 'Ciudad'],
+    ['#profile-university', 'university', 'Universidad'],
+  ];
+  fields.forEach(([selector, key, label]) => {
+    const element = $(selector);
+    addProfileField(element, key, label, state.profile[key]);
+  });
+
+  addProfileField(
+    $('#about-text'),
+    'about',
+    'Acerca de mí',
+    (Array.isArray(state.profile.about) ? state.profile.about : [state.profile.about]).join('\n\n'),
+    true,
+  );
+  addProfileField(
+    $('#interests'),
+    'interests',
+    'Áreas de interés (una por línea)',
+    (state.profile.interests || []).join('\n'),
+    true,
+  );
+
+  $('#education').querySelectorAll('.study').forEach((study, index) => {
+    const education = state.profile.education[index] || {};
+    const text = study.querySelector('.study__text');
+    text.replaceChildren();
+    [
+      ['program', 'Programa'],
+      ['institution', 'Institución'],
+      ['place', 'Lugar'],
+    ].forEach(([key, label]) => {
+      const field = document.createElement('input');
+      field.className = 'profile-field';
+      field.setAttribute('aria-label', `${label} de formación ${index + 1}`);
+      field.dataset.profileField = `education.${index}.${key}`;
+      field.value = education[key] || '';
+      text.appendChild(field);
+    });
+  });
+}
+
+function profileFromEditor() {
+  const value = (key) => $(`[data-profile-field="${key}"]`).value.trim();
+  const name = value('name');
+  const profession = value('profession');
+  const city = value('city');
+  const university = value('university');
+  if (!name || !profession || !city || !university) {
+    throw new Error('Completa nombre, profesión, ciudad y universidad.');
+  }
+
+  return {
+    ...state.profile,
+    coverEyebrow: value('coverEyebrow'),
+    coverTitle: value('coverTitle'),
+    name,
+    profession,
+    city,
+    university,
+    about: value('about').split(/\n\s*\n/).map((paragraph) => paragraph.trim()).filter(Boolean),
+    interests: value('interests').split('\n').map((interest) => interest.trim()).filter(Boolean),
+    education: (state.profile.education || []).map((education, index) => ({
+      ...education,
+      program: value(`education.${index}.program`),
+      institution: value(`education.${index}.institution`),
+      place: value(`education.${index}.place`),
+    })),
+  };
+}
+
+async function saveProfile() {
+  const button = $('#btn-save-profile');
+  button.disabled = true;
+  try {
+    const profile = profileFromEditor();
+    const savedProfile = await Api.saveProfile(profile);
+    renderProfile(savedProfile || profile);
+    setProfileEditing(false);
+    showToast('Perfil actualizado');
+  } catch (error) {
+    console.error('[Worknet] No se pudo guardar el perfil:', error);
+    showToast(error.message === 'Completa nombre, profesión, ciudad y universidad.'
+      ? error.message
+      : 'No se pudo guardar el perfil. Inténtalo de nuevo.');
+  } finally {
+    button.disabled = false;
+  }
+}
+
+async function deleteAccount() {
+  if (!window.confirm('¿Seguro que quieres eliminar tu cuenta? Esta acción es permanente y no se puede deshacer.')) return;
+
+  const button = $('#btn-delete-account');
+  button.disabled = true;
+  try {
+    await Api.deleteAccount();
+    window.location.assign(CONFIG.ACCOUNT_DELETED_PAGE);
+  } catch (error) {
+    console.error('[Worknet] No se pudo eliminar la cuenta:', error);
+    showToast('No se pudo eliminar la cuenta. Inténtalo de nuevo.');
+  } finally {
+    button.disabled = false;
+  }
+}
+
 async function shareProfile() {
   const { name, profession, shareUrl } = state.profile;
   const url = shareUrl || window.location.href;
@@ -332,6 +517,26 @@ function bindEvents() {
   });
 
   $('#btn-share').addEventListener('click', shareProfile);
+  $('#btn-edit-profile').addEventListener('click', () => {
+    if (state.authenticated) setProfileEditing(true);
+    else openAccountDialog('login');
+  });
+  $('#btn-cancel-edit').addEventListener('click', () => setProfileEditing(false));
+  $('#btn-save-profile').addEventListener('click', saveProfile);
+  $('#btn-delete-account').addEventListener('click', () => {
+    if (state.authenticated) deleteAccount();
+    else openAccountDialog('login');
+  });
+  $('#btn-account').addEventListener('click', () => openAccountDialog());
+  $('#btn-close-account').addEventListener('click', closeAccountDialog);
+  $('#account-form').addEventListener('submit', submitAccountForm);
+  $$('[data-auth-mode]').forEach((button) => {
+    button.addEventListener('click', () => setAuthMode(button.dataset.authMode));
+  });
+  $('#btn-logout').addEventListener('click', logout);
+  $('#account-dialog').addEventListener('click', (event) => {
+    if (event.target === $('#account-dialog')) closeAccountDialog();
+  });
 
   /* Cambio de ciudad de la barra superior */
   $('#city-header').addEventListener('change', (event) => {
@@ -358,9 +563,6 @@ function bindEvents() {
   $('#btn-notifications').addEventListener('click', () => {
     // TODO: abrir panel de notificaciones (GET /api/notifications)
   });
-  $('#btn-account').addEventListener('click', () => {
-    // TODO: abrir menú de cuenta (ajustes, cerrar sesión)
-  });
 }
 
 /* ==========================================================================
@@ -372,13 +574,37 @@ async function init() {
   applyPageLinks();
   bindEvents();
 
-  const [profile, cities] = await Promise.all([Api.getProfile(), Api.getCities()]);
+  const [profileResult, citiesResult] = await Promise.all([
+    Api.getProfile()
+      .then((profile) => ({ profile }))
+      .catch((error) => ({ error })),
+    Api.getCities()
+      .then((cities) => ({ cities }))
+      .catch((error) => ({ error })),
+  ]);
+
+  const cities = citiesResult.cities || FALLBACK.cities;
+  if (citiesResult.error) {
+    console.error('[Worknet] No se pudieron cargar las ciudades:', citiesResult.error);
+  }
 
   // Si la persona no eligió ciudad antes, usa la de su perfil
-  if (!readStoredCity() && profile && profile.city) state.city = profile.city;
-
   renderCities(cities);
-  renderProfile(profile);
+  if (profileResult.profile) {
+    state.authenticated = true;
+    if (!readStoredCity() && profileResult.profile.city) state.city = profileResult.profile.city;
+    renderCities(cities);
+    renderProfile(profileResult.profile);
+  } else {
+    state.authenticated = false;
+    renderProfile(FALLBACK.profile);
+    if (profileResult.error.message === 'HTTP 401') {
+      openAccountDialog('login');
+    } else {
+      console.error('[Worknet] No se pudo cargar el perfil:', profileResult.error);
+      showToast('No se pudo conectar. Inicia el servidor y abre la página desde http://127.0.0.1:8000.');
+    }
+  }
   document.body.classList.remove('is-loading');
 }
 
