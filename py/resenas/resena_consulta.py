@@ -1,13 +1,12 @@
-# HU-E5-04
-
 import almacenamiento
+from .resena_modelo import Resena
 
 
 def fn_consultar_resenas_especialista(p_especialista):
-    if not isinstance(p_especialista, str) or p_especialista.strip() == "":
+    if not isinstance(p_especialista, str) or not p_especialista.strip():
         raise ValueError("El especialista no puede estar vacío")
     return [
-        v_resena
-        for v_resena in almacenamiento.resenas
-        if v_resena.especialista == p_especialista
+        Resena.desde_diccionario(datos)
+        for datos in almacenamiento.cargar("resenas")
+        if datos.get("especialista") == p_especialista
     ]

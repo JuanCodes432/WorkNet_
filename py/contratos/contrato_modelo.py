@@ -1,12 +1,18 @@
-# HU-E4-01
-
 from datetime import datetime
 
 
 class Contrato:
-    def __init__(self, p_id, p_cliente, p_especialista, p_servicio,
-                 p_precio, p_descripcion="", p_estado="activo",
-                 p_fecha_creacion=None):
+    def __init__(
+        self,
+        p_id,
+        p_cliente,
+        p_especialista,
+        p_servicio,
+        p_precio,
+        p_descripcion="",
+        p_estado="activo",
+        p_fecha_creacion=None,
+    ):
         self.id = p_id
         self.cliente = p_cliente
         self.especialista = p_especialista
@@ -29,3 +35,16 @@ class Contrato:
             "estado": self.estado,
             "fecha_creacion": self.fecha_creacion,
         }
+
+    @classmethod
+    def desde_diccionario(cls, datos):
+        return cls(
+            datos["id"],
+            datos["cliente"],
+            datos["especialista"],
+            datos["servicio"],
+            datos["precio"],
+            datos.get("descripcion", ""),
+            datos.get("estado", "activo"),
+            datos.get("fecha_creacion"),
+        )
