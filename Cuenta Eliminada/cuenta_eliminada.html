@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cuenta eliminada · espacio.</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="Styles_cuenta_eliminada.css">
+</head>
+<body>
+  <header class="encabezado">
+    <a class="encabezado__marca" href="../Perfil%20Profesional/Perfil_Profesional.html" aria-label="Worknet, ir al inicio">Worknet</a>
+    <a class="encabezado__enlace-ayuda" href="ayuda.html">Centro de ayuda</a>
+  </header>
+
+  <main class="contenido-principal">
+    <section class="tarjeta-confirmacion" aria-labelledby="titulo-confirmacion">
+      <div class="tarjeta-confirmacion__icono" aria-hidden="true">
+        <svg viewBox="0 0 80 80" width="80" height="80" xmlns="http://www.w3.org/2000/svg" focusable="false">
+          <circle cx="40" cy="40" r="40" fill="#EDF3FF"/>
+          <circle cx="40" cy="40" r="19" fill="none" stroke="#2463EB" stroke-width="1.6"/>
+          <path d="M31.5 40.5 L37.5 46.5 L49 34.5" fill="none" stroke="#2463EB" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div class="tarjeta-confirmacion__textos">
+        <p class="tarjeta-confirmacion__estado">ELIMINACIÓN COMPLETADA</p>
+        <h1 class="tarjeta-confirmacion__titulo" id="titulo-confirmacion" tabindex="-1">Tu cuenta se ha eliminado</h1>
+        <p class="tarjeta-confirmacion__descripcion">
+          Tu cuenta ya no está disponible y tu sesión se ha cerrado. Gracias por haber sido parte de este espacio.
+        </p>
+      </div>
+
+      <div class="invitacion-a-volver">
+        <p class="invitacion-a-volver__pregunta">¿Quieres volver más adelante?</p>
+        <p class="invitacion-a-volver__respuesta">Siempre puedes crear una nueva cuenta.</p>
+      </div>
+
+      <div class="tarjeta-confirmacion__acciones">
+        <a class="boton-principal" id="boton-volver-al-inicio" href="../Perfil%20Profesional/Perfil_Profesional.html">Volver al inicio</a>
+        <p class="tarjeta-confirmacion__despedida">Gracias por el tiempo que compartiste con nosotros.</p>
+      </div>
+    </section>
+
+    <p class="ayuda-soporte">
+      ¿Necesitas ayuda?
+      <a class="ayuda-soporte__enlace" href="soporte.html">Contacta con soporte</a>
+    </p>
+  </main>
+
+  <footer class="pie-de-pagina">
+    <p class="pie-de-pagina__derechos">© <span id="anio-actual">2026</span> Espacio</p>
+    <nav class="pie-de-pagina__enlaces-legales" aria-label="Enlaces legales">
+      <a href="privacidad.html">Privacidad</a>
+      <a href="terminos.html">Términos de uso</a>
+    </nav>
+  </footer>
+
+  <script src="Java_cuenta_eliminada.js"></script>
+</body>
+</html>

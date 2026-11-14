@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Perfil profesional · Worknet</title>
+  <meta name="description" content="Conoce a la persona detrás de cada solución.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="Styles_Perfil_Profesional.css">
+</head>
+<body class="is-loading">
+
+  <!-- Iconos (estilo Lucide, los mismos nombres que usa el diseño en Figma) -->
+  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></symbol>
+    <symbol id="i-user-round" viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></symbol>
+    <symbol id="i-house" viewBox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+    <symbol id="i-messages-square" viewBox="0 0 24 24"><path d="M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z"/><path d="M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1"/></symbol>
+    <symbol id="i-chart-combined" viewBox="0 0 24 24"><path d="M12 16v5"/><path d="M16 14v7"/><path d="M20 10v11"/><path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15"/><path d="M4 18v3"/><path d="M8 14v7"/></symbol>
+    <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></symbol>
+    <symbol id="i-code-xml" viewBox="0 0 24 24"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></symbol>
+    <symbol id="i-graduation-cap" viewBox="0 0 24 24"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></symbol>
+    <symbol id="i-share-2" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/></symbol>
+    <symbol id="i-clock-3" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16.5 12"/></symbol>
+    <symbol id="i-calendar-check" viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></symbol>
+  </svg>
+
+  <div class="layout">
+
+    <!-- Navegación lateral -->
+    <aside class="sidebar" aria-label="Navegación principal">
+      <div class="sidebar__inner">
+
+        <a class="logo" data-page="home" href="Pagina_Principal.html" aria-label="Worknet, ir al inicio">
+          <img src="img/logo-worknet.png" alt="Worknet">
+          <span class="logo__text" aria-hidden="true">worknet</span>
+        </a>
+
+        <section class="account-card" aria-label="Tu cuenta">
+          <span class="avatar avatar--58" id="side-avatar">
+            <svg class="icon icon--35" aria-hidden="true"><use href="#i-user-round"/></svg>
+          </span>
+          <p class="account-card__name" id="side-name">Pepito perez</p>
+          <p class="account-card__role" id="side-role">Ingeniero de Software</p>
+          <p class="account-card__place">
+            <svg class="icon icon--11" aria-hidden="true"><use href="#i-map-pin"/></svg>
+            <span id="side-place">Popayán · Cauca</span>
+          </p>
+          <p class="account-card__uni" id="side-uni">Universidad del Cauca</p>
+        </section>
+
+        <nav class="menu" aria-label="Menú principal">
+          <a class="menu__link" data-page="home" href="Pagina_Principal.html">
+            <svg class="icon icon--20" aria-hidden="true"><use href="#i-house"/></svg>
+            Inicio
+          </a>
+          <a class="menu__link" data-page="messages" href="mensajes.html">
+            <svg class="icon icon--20" aria-hidden="true"><use href="#i-messages-square"/></svg>
+            Mensajes
+            <span class="menu__dot" id="unread-dot" role="img" aria-label="Mensajes nuevos"></span>
+          </a>
+          <a class="menu__link is-active" href="Perfil_Profesional.html" aria-current="page">
+            <svg class="icon icon--20" aria-hidden="true"><use href="#i-user-round"/></svg>
+            Mi perfil
+          </a>
+        </nav>
+
+        <div class="tools">
+          <p class="tools__label">ACTIVIDAD</p>
+          <a class="tools__link" data-page="receipt" href="generar-recibo.html">
+            <svg class="icon icon--19" aria-hidden="true"><use href="#i-chart-combined"/></svg>
+            Generar recibo
+          </a>
+        </div>
+
+      </div>
+    </aside>
+
+    <div class="content">
+
+      <!-- Barra superior -->
+      <header class="topbar">
+        <nav class="breadcrumb" aria-label="Ruta de navegación">
+          <a data-page="home" href="Pagina_Principal.html">Worknet</a>
+          <svg class="icon icon--13" aria-hidden="true"><use href="#i-chevron-right"/></svg>
+          <span aria-current="page">Perfil profesional</span>
+        </nav>
+
+        <div class="account">
+          <label class="city">
+            <svg class="icon icon--16 icon--primary" aria-hidden="true"><use href="#i-map-pin"/></svg>
+            <select id="city-header" aria-label="Zona"></select>
+            <svg class="icon icon--13 icon--muted" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+          </label>
+
+          <span class="account__divider" aria-hidden="true"></span>
+
+          <button type="button" class="icon-btn" id="btn-notifications" aria-label="Notificaciones">
+            <svg class="icon icon--20" aria-hidden="true"><use href="#i-bell"/></svg>
+          </button>
+
+          <button type="button" class="avatar-btn" id="btn-account" aria-label="Acceder o administrar cuenta">
+            <span class="avatar avatar--34" aria-hidden="true">
+              <svg class="icon icon--20" aria-hidden="true"><use href="#i-user-round"/></svg>
+            </span>
+            <svg class="icon icon--14 icon--muted" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="page">
+
+        <!-- Encabezado -->
+        <div class="page__head">
+          <div class="page__title">
+            <h1>Perfil profesional</h1>
+            <p>Conoce a la persona detrás de cada solución.</p>
+          </div>
+          <button type="button" class="btn btn--outline btn--sm" id="btn-edit-profile">
+            <svg class="icon icon--17" aria-hidden="true"><use href="#i-pencil"/></svg>
+            Editar perfil
+          </button>
+          <button type="button" class="btn btn--outline btn--sm" id="btn-cancel-edit" hidden>Cancelar</button>
+          <button type="button" class="btn btn--primary btn--sm" id="btn-save-profile" hidden>Guardar cambios</button>
+        </div>
+
+        <!-- Presentación profesional -->
+        <section class="profile-card" aria-label="Presentación profesional">
+          <div class="cover">
+            <div class="cover__copy">
+              <p class="cover__eyebrow" id="cover-eyebrow">TECNOLOGÍA QUE CONECTA</p>
+              <p class="cover__title" id="cover-title">Ideas que se convierten en soluciones.</p>
+            </div>
+            <div class="cover__motif" aria-hidden="true">
+              <span class="node"></span>
+              <span class="link-line"></span>
+              <span class="cover__code"><svg class="icon icon--34" aria-hidden="true"><use href="#i-code-xml"/></svg></span>
+              <span class="link-line"></span>
+              <span class="node"></span>
+            </div>
+          </div>
+
+          <div class="identity">
+            <span class="avatar avatar--100" id="profile-avatar">
+              <svg class="icon icon--60" aria-hidden="true"><use href="#i-user-round"/></svg>
+            </span>
+            <div class="identity__text">
+              <p class="identity__name" id="profile-name">Pepito perez</p>
+              <p class="identity__role" id="profile-role">Ingeniero de Software</p>
+              <ul class="identity__facts">
+                <li>
+                  <svg class="icon icon--14" aria-hidden="true"><use href="#i-map-pin"/></svg>
+                  <span id="profile-city">Popayán, Cauca</span>
+                </li>
+                <li>
+                  <svg class="icon icon--15" aria-hidden="true"><use href="#i-graduation-cap"/></svg>
+                  <span id="profile-university">Universidad del Cauca</span>
+                </li>
+              </ul>
+            </div>
+            <div class="identity__actions">
+              <button type="button" class="btn btn--outline btn--lg" id="btn-share">
+                <svg class="icon icon--17" aria-hidden="true"><use href="#i-share-2"/></svg>
+                Compartir perfil
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Pestañas -->
+        <div class="tabs" role="tablist" aria-label="Secciones del perfil">
+          <button type="button" class="tab is-active" role="tab" id="tab-general" aria-selected="true" aria-controls="panel-general" data-tab="general">Información general</button>
+          <button type="button" class="tab" role="tab" id="tab-experience" aria-selected="false" aria-controls="panel-experience" data-tab="experience" tabindex="-1">Experiencia y formación</button>
+          <button type="button" class="tab" role="tab" id="tab-activity" aria-selected="false" aria-controls="panel-activity" data-tab="activity" tabindex="-1">Actividad</button>
+        </div>
+
+        <!-- Panel: Información general -->
+        <div class="info" id="panel-general" role="tabpanel" aria-labelledby="tab-general">
+          <div class="info__main">
+            <section class="card" aria-labelledby="about-title">
+              <h2 id="about-title">Acerca de mí</h2>
+              <div class="card__text" id="about-text">
+                <p>Soy Pepito, Ingeniero de Software de la Universidad del Cauca, en Popayán. Mi trabajo se centra en convertir ideas y necesidades en soluciones de software.</p>
+                <p>Cuéntame sobre tu proyecto para conversar acerca de lo que necesitas y definir juntos el siguiente paso.</p>
+              </div>
+              <ul class="chips" id="interests">
+                <li>Ingeniería de software</li>
+                <li>Tecnología</li>
+                <li>Proyectos digitales</li>
+              </ul>
+            </section>
+
+            <section class="card card--gap20" aria-labelledby="edu-title">
+              <h2 id="edu-title">Formación académica</h2>
+              <ul class="studies" id="education">
+                <li class="study">
+                  <span class="study__icon"><svg class="icon icon--26" aria-hidden="true"><use href="#i-graduation-cap"/></svg></span>
+                  <div class="study__text">
+                    <p class="study__program">Ingeniería de Software</p>
+                    <p class="study__school">Universidad del Cauca</p>
+                    <p class="study__place">Popayán, Cauca</p>
+                  </div>
+                </li>
+              </ul>
+            </section>
+          </div>
+
+          <aside class="info__side" aria-label="Confianza">
+            <section class="card card--side" aria-labelledby="punct-title">
+              <div class="card__head">
+                <svg class="icon icon--22 icon--primary" aria-hidden="true"><use href="#i-clock-3"/></svg>
+                <h2 id="punct-title">Puntualidad</h2>
+              </div>
+              <p class="stat-big" id="punct-value">39 de 40</p>
+              <p class="stat-detail">visitas realizadas a tiempo.</p>
+              <a class="chip chip--link" data-page="visits" href="historial-visitas.html">
+                <svg class="icon icon--13" aria-hidden="true"><use href="#i-calendar-check"/></svg>
+                Historial de visitas
+              </a>
+              <p class="stat-note">Un historial que te ayuda a elegir con más información.</p>
+            </section>
+          </aside>
+        </div>
+
+        <!-- Panel: Experiencia y formación -->
+        <div class="info info--single" id="panel-experience" role="tabpanel" aria-labelledby="tab-experience" hidden>
+          <section class="card card--empty" id="experience-list">
+            <p>Aún no hay experiencia registrada.</p>
+          </section>
+        </div>
+
+        <!-- Panel: Actividad -->
+        <div class="info info--single" id="panel-activity" role="tabpanel" aria-labelledby="tab-activity" hidden>
+          <section class="card card--empty" id="activity-list">
+            <p>Aún no hay actividad para mostrar.</p>
+          </section>
+        </div>
+
+        <section class="account-danger" aria-labelledby="delete-account-title">
+          <div>
+            <h2 id="delete-account-title">Eliminar cuenta</h2>
+            <p>Esta acción es permanente y no se puede deshacer.</p>
+          </div>
+          <button type="button" class="btn btn--danger btn--sm" id="btn-delete-account">Eliminar cuenta</button>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <dialog class="account-dialog" id="account-dialog" aria-labelledby="account-dialog-title">
+    <form class="account-form" id="account-form">
+      <div class="account-form__head">
+        <div>
+          <h2 id="account-dialog-title">Tu cuenta Worknet</h2>
+          <p>Inicia sesión o crea una cuenta para administrar tu perfil.</p>
+        </div>
+        <button type="button" class="account-form__close" id="btn-close-account" aria-label="Cerrar">×</button>
+      </div>
+
+      <div class="account-form__modes" role="group" aria-label="Acceso a la cuenta">
+        <button type="button" class="account-form__mode is-active" data-auth-mode="login">Iniciar sesión</button>
+        <button type="button" class="account-form__mode" data-auth-mode="create">Crear cuenta</button>
+      </div>
+
+      <label class="account-form__field">
+        Correo electrónico
+        <input type="email" id="auth-email" autocomplete="email" required maxlength="254">
+      </label>
+      <label class="account-form__field">
+        Contraseña
+        <input type="password" id="auth-password" autocomplete="current-password" required minlength="12" maxlength="1024">
+        <span>Debe tener al menos 12 caracteres.</span>
+      </label>
+
+      <div class="account-form__registration" id="registration-fields" hidden>
+        <label class="account-form__field">Nombre
+          <input type="text" id="auth-name" autocomplete="name" maxlength="120">
+        </label>
+        <label class="account-form__field">Profesión
+          <input type="text" id="auth-profession" maxlength="160">
+        </label>
+        <label class="account-form__field">Ciudad
+          <input type="text" id="auth-city" maxlength="160">
+        </label>
+        <label class="account-form__field">Universidad
+          <input type="text" id="auth-university" maxlength="200">
+        </label>
+      </div>
+
+      <p class="account-form__error" id="auth-error" role="alert" hidden></p>
+      <button type="submit" class="btn btn--primary btn--sm account-form__submit" id="btn-auth-submit">Iniciar sesión</button>
+      <button type="button" class="btn btn--outline btn--sm account-form__logout" id="btn-logout" hidden>Cerrar sesión</button>
+    </form>
+  </dialog>
+
+  <script src="Conexion_Backend_Front_Perfil_Profesional.js"></script>
+  <script src="Java_Perfil_Profesional.js"></script>
+</body>
+</html>
