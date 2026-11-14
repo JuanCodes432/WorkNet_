@@ -15,27 +15,59 @@
 }
 
 .worknet-nav__brand {
+  flex-shrink: 0;
   color: #2463eb;
   font-size: 17px;
   font-weight: 700;
   letter-spacing: 0.02em;
+  text-decoration: none;
 }
 
 .worknet-nav__links {
   display: flex;
+  min-width: 0;
   flex-wrap: wrap;
   gap: 8px;
 }
 
 .worknet-nav__links a {
+  display: inline-flex;
+  align-items: center;
   padding: 8px 12px;
   border-radius: 8px;
+  color: #17263c;
+  text-decoration: none;
+}
+
+.worknet-nav__links a:visited {
+  color: #17263c;
 }
 
 .worknet-nav__links a:hover,
 .worknet-nav__links a:focus-visible {
   background: #edf3ff;
   color: #2463eb;
+}
+
+.worknet-nav__links a[aria-current="page"] {
+  background: #edf3ff;
+  color: #2463eb;
+  font-weight: 600;
+}
+
+.worknet-nav__links [data-worknet-guest],
+.worknet-nav__links [data-worknet-session],
+.worknet-nav__links [data-worknet-logout] {
+  display: none;
+}
+
+.worknet-nav[data-session-state="guest"] .worknet-nav__links [data-worknet-guest] {
+  display: inline-flex;
+}
+
+.worknet-nav[data-session-state="authenticated"] .worknet-nav__links [data-worknet-session],
+.worknet-nav[data-session-state="authenticated"] .worknet-nav__links [data-worknet-logout] {
+  display: inline-flex;
 }
 
 .worknet-nav + .app-shell .sidebar {
@@ -55,9 +87,14 @@
 
   .worknet-nav__links {
     gap: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: thin;
   }
 
   .worknet-nav__links a {
+    flex-shrink: 0;
     padding: 8px 7px;
+    white-space: nowrap;
   }
 }

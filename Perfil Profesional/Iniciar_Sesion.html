@@ -13,7 +13,10 @@
     <a class="worknet-nav__brand" href="/">WorkNet</a>
     <div class="worknet-nav__links">
       <a href="/">Inicio</a>
-      <a href="/Perfil%20Profesional/Crear_Perfil.html">Crear perfil</a>
+      <a href="/Perfil%20Profesional/Crear_Perfil.html" data-worknet-guest>Crear perfil</a>
+      <a href="/Perfil%20Profesional/Iniciar_Sesion.html" data-worknet-guest aria-current="page">Iniciar sesión</a>
+      <a href="/Perfil%20Profesional/Perfil_Profesional.html" data-worknet-session>Perfil</a>
+      <a href="/Perfil%20Profesional/Iniciar_Sesion.html" data-worknet-logout>Cerrar sesión</a>
     </div>
   </nav>
 
@@ -45,10 +48,11 @@
 
       <p class="login-card__footer">
         ¿Aún no tienes cuenta?
-        <a href="/Perfil%20Profesional/Crear_Perfil.html">Crea tu perfil</a>
+        <a href="/Perfil%20Profesional/Crear_Perfil.html" data-worknet-guest>Crea tu perfil</a>
       </p>
     </section>
   </main>
+  <script src="/js/navegacion_cuenta.js" defer></script>
   <script src="/Perfil%20Profesional/Java_Iniciar_Sesion.js" defer></script>
 </body>
 </html>

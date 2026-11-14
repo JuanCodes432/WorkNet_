@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Perfil profesional · Worknet</title>
+  <title>Perfil profesional · WorkNet</title>
   <meta name="description" content="Conoce a la persona detrás de cada solución.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,9 +18,10 @@
     <div class="worknet-nav__links">
       <a href="/">Inicio</a>
       <a href="/resenas">Reseñas</a>
-      <a href="/Perfil%20Profesional/Perfil_Profesional.html" aria-current="page">Perfil</a>
-      <a href="/Perfil%20Profesional/Crear_Perfil.html">Crear perfil</a>
-      <a href="/Perfil%20Profesional/Iniciar_Sesion.html">Iniciar sesión</a>
+      <a href="/Perfil%20Profesional/Perfil_Profesional.html" data-worknet-session aria-current="page">Perfil</a>
+      <a href="/Perfil%20Profesional/Crear_Perfil.html" data-worknet-guest>Crear perfil</a>
+      <a href="/Perfil%20Profesional/Iniciar_Sesion.html" data-worknet-guest>Iniciar sesión</a>
+      <a href="/Perfil%20Profesional/Iniciar_Sesion.html" data-worknet-logout>Cerrar sesión</a>
     </div>
   </nav>
 
@@ -313,6 +314,7 @@
     </form>
   </dialog>
 
+  <script src="/js/navegacion_cuenta.js" defer></script>
   <script src="/Perfil%20Profesional/Conexion_Backend_Front_Perfil_Profesional.js"></script>
   <script src="/Perfil%20Profesional/Java_Perfil_Profesional.js"></script>
 </body>

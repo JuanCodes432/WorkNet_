@@ -13,7 +13,10 @@
     <a class="worknet-nav__brand" href="/">WorkNet</a>
     <div class="worknet-nav__links">
       <a href="/">Inicio</a>
-      <a href="/Perfil%20Profesional/Iniciar_Sesion.html">¿Ya tienes cuenta? Inicia sesión</a>
+      <a href="/Perfil%20Profesional/Crear_Perfil.html" data-worknet-guest aria-current="page">Crear perfil</a>
+      <a href="/Perfil%20Profesional/Iniciar_Sesion.html" data-worknet-guest>Iniciar sesión</a>
+      <a href="/Perfil%20Profesional/Perfil_Profesional.html" data-worknet-session>Perfil</a>
+      <a href="/Perfil%20Profesional/Iniciar_Sesion.html" data-worknet-logout>Cerrar sesión</a>
     </div>
   </nav>
 
@@ -22,7 +25,7 @@
       <header class="create-card__header">
         <p class="create-card__eyebrow">Únete a WorkNet</p>
         <h1 id="create-title">Crear perfil</h1>
-        <p>Completa tus datos para conectar con clientes y especialistas.</p>
+        <p>Completa tus datos para crear tu perfil en WorkNet.</p>
       </header>
 
       <form id="create-profile-form" class="create-form" novalidate>
@@ -32,37 +35,40 @@
           <div class="form-field">
             <label for="profile-name">Nombre</label>
             <input id="profile-name" name="name" type="text" autocomplete="name"
-              maxlength="120" required>
-            <span class="field-error" id="name-error"></span>
+              maxlength="120" required aria-describedby="name-error">
+            <span class="field-error" id="name-error" role="alert"></span>
           </div>
 
           <div class="form-field">
             <label for="profile-profession">Profesión</label>
             <input id="profile-profession" name="profession" type="text"
-              autocomplete="organization-title" maxlength="160" required>
-            <span class="field-error" id="profession-error"></span>
+              autocomplete="organization-title" maxlength="160" required
+              aria-describedby="profession-error">
+            <span class="field-error" id="profession-error" role="alert"></span>
           </div>
 
           <div class="form-field">
             <label for="profile-city">Ciudad</label>
-            <select id="profile-city" name="city" autocomplete="address-level2" required>
+            <select id="profile-city" name="city" autocomplete="address-level2" required
+              aria-describedby="city-error">
               <option value="">Selecciona una ciudad</option>
             </select>
-            <span class="field-error" id="city-error"></span>
+            <span class="field-error" id="city-error" role="alert"></span>
           </div>
 
           <div class="form-field">
             <label for="profile-university">Universidad</label>
             <input id="profile-university" name="university" type="text"
-              autocomplete="organization" maxlength="200" required>
-            <span class="field-error" id="university-error"></span>
+              autocomplete="organization" maxlength="200" required
+              aria-describedby="university-error">
+            <span class="field-error" id="university-error" role="alert"></span>
           </div>
 
           <div class="form-field form-field--full">
             <label for="account-email">Correo electrónico</label>
             <input id="account-email" name="email" type="email" autocomplete="email"
-              maxlength="254" required>
-            <span class="field-error" id="email-error"></span>
+              maxlength="254" required aria-describedby="email-error">
+            <span class="field-error" id="email-error" role="alert"></span>
           </div>
 
           <div class="form-field">
@@ -71,7 +77,7 @@
               autocomplete="new-password" minlength="12" maxlength="1024" required
               aria-describedby="password-hint password-error">
             <span class="field-hint" id="password-hint">Debe tener al menos 12 caracteres.</span>
-            <span class="field-error" id="password-error"></span>
+            <span class="field-error" id="password-error" role="alert"></span>
           </div>
 
           <div class="form-field">
@@ -79,7 +85,7 @@
             <input id="confirm-password" name="confirm-password" type="password"
               autocomplete="new-password" minlength="12" maxlength="1024" required
               aria-describedby="confirm-password-error">
-            <span class="field-error" id="confirm-password-error"></span>
+            <span class="field-error" id="confirm-password-error" role="alert"></span>
           </div>
         </div>
 
@@ -87,6 +93,7 @@
       </form>
     </section>
   </main>
+  <script src="/js/navegacion_cuenta.js" defer></script>
   <script src="/Perfil%20Profesional/Java_Crear_Perfil.js" defer></script>
 </body>
 </html>
