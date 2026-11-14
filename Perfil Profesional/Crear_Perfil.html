@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Crea tu perfil profesional en WorkNet.">
+  <title>Crear perfil · WorkNet</title>
+  <link rel="stylesheet" href="/css/navegacion.css">
+  <link rel="stylesheet" href="/Perfil%20Profesional/Styles_Crear_Perfil.css">
+</head>
+<body>
+  <nav class="worknet-nav" aria-label="Navegación principal">
+    <a class="worknet-nav__brand" href="/">WorkNet</a>
+    <div class="worknet-nav__links">
+      <a href="/">Inicio</a>
+    </div>
+  </nav>
+
+  <main class="create-page">
+    <section class="create-card" aria-labelledby="create-title">
+      <header class="create-card__header">
+        <p class="create-card__eyebrow">Únete a WorkNet</p>
+        <h1 id="create-title">Crear perfil</h1>
+        <p>Completa tus datos para conectar con clientes y especialistas.</p>
+      </header>
+
+      <form id="create-profile-form" class="create-form">
+        <p class="form-message" id="form-message" role="alert" aria-live="polite" hidden></p>
+
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="profile-name">Nombre</label>
+            <input id="profile-name" name="name" type="text" autocomplete="name"
+              maxlength="120" required>
+            <span class="field-error" id="name-error"></span>
+          </div>
+
+          <div class="form-field">
+            <label for="profile-profession">Profesión</label>
+            <input id="profile-profession" name="profession" type="text"
+              autocomplete="organization-title" maxlength="160" required>
+            <span class="field-error" id="profession-error"></span>
+          </div>
+
+          <div class="form-field">
+            <label for="profile-city">Ciudad</label>
+            <select id="profile-city" name="city" autocomplete="address-level2" required>
+              <option value="">Selecciona una ciudad</option>
+            </select>
+            <span class="field-error" id="city-error"></span>
+          </div>
+
+          <div class="form-field">
+            <label for="profile-university">Universidad</label>
+            <input id="profile-university" name="university" type="text"
+              autocomplete="organization" maxlength="200" required>
+            <span class="field-error" id="university-error"></span>
+          </div>
+
+          <div class="form-field form-field--full">
+            <label for="account-email">Correo electrónico</label>
+            <input id="account-email" name="email" type="email" autocomplete="email"
+              maxlength="254" required>
+            <span class="field-error" id="email-error"></span>
+          </div>
+
+          <div class="form-field">
+            <label for="account-password">Contraseña</label>
+            <input id="account-password" name="password" type="password"
+              autocomplete="new-password" minlength="12" maxlength="1024" required
+              aria-describedby="password-hint password-error">
+            <span class="field-hint" id="password-hint">Debe tener al menos 12 caracteres.</span>
+            <span class="field-error" id="password-error"></span>
+          </div>
+
+          <div class="form-field">
+            <label for="confirm-password">Confirmar contraseña</label>
+            <input id="confirm-password" name="confirm-password" type="password"
+              autocomplete="new-password" minlength="12" maxlength="1024" required
+              aria-describedby="confirm-password-error">
+            <span class="field-error" id="confirm-password-error"></span>
+          </div>
+        </div>
+
+        <button class="create-button" id="create-submit" type="submit">Crear perfil</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
