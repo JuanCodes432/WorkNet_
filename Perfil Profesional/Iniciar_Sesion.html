@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Inicia sesión en WorkNet.">
+  <title>Iniciar sesión · WorkNet</title>
+  <link rel="stylesheet" href="/css/navegacion.css">
+  <link rel="stylesheet" href="/Perfil%20Profesional/Styles_Iniciar_Sesion.css">
+</head>
+<body>
+  <nav class="worknet-nav" aria-label="Navegación principal">
+    <a class="worknet-nav__brand" href="/">WorkNet</a>
+    <div class="worknet-nav__links">
+      <a href="/">Inicio</a>
+      <a href="/Perfil%20Profesional/Crear_Perfil.html" data-worknet-guest>Crear perfil</a>
+      <a href="/Perfil%20Profesional/Iniciar_Sesion.html" data-worknet-guest aria-current="page">Iniciar sesión</a>
+      <a href="/Perfil%20Profesional/Perfil_Profesional.html" data-worknet-session>Perfil</a>
+      <a href="/Perfil%20Profesional/Iniciar_Sesion.html" data-worknet-logout>Cerrar sesión</a>
+    </div>
+  </nav>
+
+  <main class="login-page">
+    <section class="login-card" aria-labelledby="login-title">
+      <header class="login-card__header">
+        <p class="login-card__eyebrow">Bienvenido de nuevo</p>
+        <h1 id="login-title">Iniciar sesión</h1>
+        <p>Ingresa a tu cuenta para administrar tu perfil profesional.</p>
+      </header>
+
+      <form id="login-form" class="login-form" novalidate>
+        <p class="form-message" id="login-message" role="alert" aria-live="polite" hidden></p>
+
+        <div class="form-field">
+          <label for="login-email">Correo electrónico</label>
+          <input id="login-email" name="email" type="email" autocomplete="email"
+            maxlength="254" required>
+        </div>
+
+        <div class="form-field">
+          <label for="login-password">Contraseña</label>
+          <input id="login-password" name="password" type="password"
+            autocomplete="current-password" maxlength="1024" required>
+        </div>
+
+        <button class="login-button" id="login-submit" type="submit">Iniciar sesión</button>
+      </form>
+
+      <p class="login-card__footer">
+        ¿Aún no tienes cuenta?
+        <a href="/Perfil%20Profesional/Crear_Perfil.html" data-worknet-guest>Crea tu perfil</a>
+      </p>
+    </section>
+  </main>
+  <script src="/js/navegacion_cuenta.js" defer></script>
+  <script src="/Perfil%20Profesional/Java_Iniciar_Sesion.js" defer></script>
+</body>
+</html>
