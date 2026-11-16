@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contratar especialista · WorkNet</title>
+  <link rel="stylesheet" href="/css/navegacion.css">
+  <link rel="stylesheet" href="/css/GenerarRecibo.css">
+  <link rel="stylesheet" href="/css/contratacion.css">
+</head>
+<body>
+  <nav class="worknet-nav" aria-label="Navegación principal">
+    <a class="worknet-nav__brand" href="/">WorkNet</a>
+    <div class="worknet-nav__links">
+      <a href="/">Inicio</a>
+      <a href="/resenas">Reseñas</a>
+      <a href="/Perfil%20Profesional/Perfil_Profesional.html" data-worknet-session>Perfil</a>
+      <a href="/Perfil%20Profesional/Crear_Perfil.html" data-worknet-guest>Crear perfil</a>
+      <a href="/Perfil%20Profesional/Iniciar_Sesion.html" data-worknet-guest>Iniciar sesión</a>
+      <a href="/Perfil%20Profesional/Iniciar_Sesion.html" data-worknet-logout>Cerrar sesión</a>
+    </div>
+  </nav>
+  <main class="pagina">
+    <a class="volver" href="/especialistas">← Volver a especialistas</a>
+    <h1>Contratar un servicio</h1>
+    <p class="descripcion">Completa los detalles del acuerdo. El contrato se creará como pendiente.</p>
+    <p class="aviso">Modo demostración: el cliente se toma de tu sesión. No se realiza ningún pago.</p>
+    <section class="formulario">
+      <p id="especialista-seleccionado" class="seccion" aria-live="polite">Cargando especialista...</p>
+      <p id="cliente-actual" class="ubicacion-perfil" aria-live="polite"></p>
+      <form id="form-contratacion">
+        <div class="campo">
+          <label for="servicio">Servicio</label>
+          <input id="servicio" name="servicio" type="text" maxlength="160" required>
+        </div>
+        <div class="campo">
+          <label for="descripcion">Descripción</label>
+          <textarea id="descripcion" name="descripcion" rows="4" maxlength="4000" required></textarea>
+        </div>
+        <div class="campo">
+          <label for="precio">Precio acordado (COP)</label>
+          <input id="precio" name="precio" type="number" min="0.01" step="0.01" required>
+        </div>
+        <div class="campo">
+          <label for="fecha-acordada">Fecha acordada (opcional)</label>
+          <input id="fecha-acordada" name="fecha_acordada" type="date">
+        </div>
+        <p id="mensaje-contratacion" role="alert" hidden></p>
+        <div class="botones">
+          <a class="boton-secundario" href="/especialistas">Cancelar</a>
+          <button id="enviar-contratacion" class="boton-contratar" type="submit" disabled>Crear contrato</button>
+        </div>
+      </form>
+    </section>
+  </main>
+  <script src="/js/navegacion_cuenta.js" defer></script>
+  <script src="/js/Contratar.js" defer></script>
+</body>
+</html>

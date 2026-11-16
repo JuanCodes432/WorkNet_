@@ -4,7 +4,12 @@ from pathlib import Path
 
 from flask import Flask, redirect, send_from_directory
 
-from contratos.contrato_rutas import contrato_bp
+from contratos.contrato_rutas import (
+    contrato_bp,
+    demo_contratos_bp,
+    especialistas_bp,
+    mis_contratos_bp,
+)
 from cuentas.cuenta_rutas import cuenta_bp
 from resenas.resena_rutas import resena_bp
 
@@ -26,6 +31,9 @@ def create_app():
     )
 
     flask_app.register_blueprint(contrato_bp)
+    flask_app.register_blueprint(mis_contratos_bp)
+    flask_app.register_blueprint(demo_contratos_bp)
+    flask_app.register_blueprint(especialistas_bp)
     flask_app.register_blueprint(resena_bp)
     flask_app.register_blueprint(cuenta_bp)
 
@@ -43,6 +51,14 @@ def create_app():
     @flask_app.get("/contrato")
     def pagina_contrato():
         return send_from_directory(RAIZ_PROYECTO, "Contrato.html")
+
+    @flask_app.get("/especialistas")
+    def pagina_especialistas():
+        return send_from_directory(RAIZ_PROYECTO, "especialistas.html")
+
+    @flask_app.get("/contratar")
+    def pagina_contratar():
+        return send_from_directory(RAIZ_PROYECTO, "contratar.html")
 
     @flask_app.get("/historial-contratos")
     def pagina_historial_contratos():

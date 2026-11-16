@@ -1,5 +1,7 @@
 
 const API_CONTRATOS = "/api/contratos";
+const API_PERFIL = "/api/me/profile";
+let perfilClienteCargado = false;
 
 document.addEventListener("DOMContentLoaded", () => {
     const campos = [
@@ -17,8 +19,32 @@ document.addEventListener("DOMContentLoaded", () => {
         "change", actualizarVistaPrevia
     );
 
+    cargarPerfilCliente();
     actualizarVistaPrevia();
 });
+
+async function cargarPerfilCliente() {
+    try {
+        const respuesta = await fetch(API_PERFIL);
+        const perfil = await respuesta.json();
+
+        if (respuesta.status === 401) {
+            alert("Inicia sesión para contratar un servicio.");
+            window.location.href = "/Perfil%20Profesional/Iniciar_Sesion.html";
+            return;
+        }
+        if (!respuesta.ok) {
+            throw new Error(perfil.error || "No se pudo consultar tu perfil.");
+        }
+
+        document.getElementById("R0").value = perfil.name;
+        perfilClienteCargado = true;
+        actualizarVistaPrevia();
+    } catch (error) {
+        console.error(error);
+        alert(error.message);
+    }
+}
 
 function obtenerValor(id) {
     return document.getElementById(id).value.trim();
@@ -54,6 +80,11 @@ function actualizarVistaPrevia() {
 }
 
 async function generarRecibo() {
+    if (!perfilClienteCargado) {
+        alert("Espera a que se cargue tu perfil antes de continuar.");
+        return;
+    }
+
     const cliente = obtenerValor("R0");
     const especialista = obtenerValor("R1");
     const servicio = obtenerValor("R2");

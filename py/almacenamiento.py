@@ -12,6 +12,7 @@ _ARCHIVOS = {
     "contratos": "contratos.json",
     "resenas": "resenas.json",
     "cuentas": "cuentas.json",
+    "especialistas": "especialistas.json",
     "contadores": "contadores.json",
 }
 _NOMBRES_ID = {

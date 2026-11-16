@@ -1,0 +1,84 @@
+body {
+  margin: 0;
+  background: #f3f6fb;
+  color: #1e2d45;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.pagina {
+  max-width: 900px;
+  margin: 32px auto;
+  padding: 24px;
+}
+
+.pagina h1 {
+  margin-top: 16px;
+}
+
+.descripcion {
+  color: #64748b;
+}
+
+.lista-especialistas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.tarjeta-especialista,
+.formulario {
+  padding: 20px;
+  border: 1px solid #e1e8f0;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.tarjeta-especialista h2 {
+  margin-top: 0;
+}
+
+.tarjeta-especialista p {
+  line-height: 1.5;
+}
+
+.boton-contratar,
+.boton-secundario {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 8px;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.boton-contratar {
+  background: #2864f0;
+  color: #fff;
+}
+
+.boton-contratar:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+.boton-secundario {
+  border: 1px solid #dce4ef;
+  background: #fff;
+  color: #334155;
+}
+
+#mensaje-contratacion {
+  color: #a12622;
+}
+
+@media (max-width: 600px) {
+  .pagina {
+    margin: 12px auto;
+    padding: 16px;
+  }
+}
