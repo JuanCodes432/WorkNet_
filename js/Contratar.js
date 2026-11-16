@@ -7,6 +7,23 @@ let perfilCliente = null;
 
 document.addEventListener("DOMContentLoaded", iniciarFormulario);
 
+async function leerRespuestaJson(respuesta) {
+    const texto = await respuesta.text();
+    try {
+        return JSON.parse(texto);
+    } catch {
+        if (respuesta.status === 403) {
+            throw new Error(
+                "La API respondió HTTP 403 (Forbidden). Inicia WorkNet con Flask " +
+                "usando `python py/api.py` y abre http://127.0.0.1:5000/ para contratar."
+            );
+        }
+        throw new Error(
+            `La API devolvió una respuesta no válida (HTTP ${respuesta.status}).`
+        );
+    }
+}
+
 async function iniciarFormulario() {
     const formulario = document.getElementById("form-contratacion");
     formulario.addEventListener("submit", crearContrato);
@@ -16,8 +33,10 @@ async function iniciarFormulario() {
             fetch(API_PERFIL),
             fetch(API_ESPECIALISTAS)
         ]);
-        const perfil = await respuestaPerfil.json();
-        const especialistas = await respuestaEspecialistas.json();
+        const [perfil, especialistas] = await Promise.all([
+            leerRespuestaJson(respuestaPerfil),
+            leerRespuestaJson(respuestaEspecialistas)
+        ]);
 
         if (respuestaPerfil.status === 401) {
             mostrarError("Inicia sesión para contratar un servicio.");
@@ -77,11 +96,11 @@ async function crearContrato(evento) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(datos)
         });
-        const resultado = await respuesta.json();
+        const resultado = await leerRespuestaJson(respuesta);
         if (!respuesta.ok) {
             throw new Error(resultado.error || "No se pudo crear el contrato.");
         }
-        window.location.href = "/historial-contratos";
+        window.location.href = "/historial-servicios";
     } catch (error) {
         console.error(error);
         mostrarError(error.message);

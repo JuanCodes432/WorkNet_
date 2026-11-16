@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Historial de servicios | WorkNet</title>
+  <link rel="stylesheet" href="/css/navegacion.css">
+  <link rel="stylesheet" href="/css/historial_servicios.css">
+</head>
+<body>
+  <nav class="worknet-nav" aria-label="Navegación principal">
+    <a class="worknet-nav__brand" href="/">WorkNet</a>
+    <div class="worknet-nav__links">
+      <a href="/">Inicio</a>
+      <a href="/resenas">Reseñas</a>
+      <a href="/historial-servicios" data-worknet-session aria-current="page">Historial de servicios</a>
+      <a href="/Perfil%20Profesional/Perfil_Profesional.html" data-worknet-session>Perfil</a>
+      <a href="/Perfil%20Profesional/Crear_Perfil.html" data-worknet-guest>Crear perfil</a>
+      <a href="/Perfil%20Profesional/Iniciar_Sesion.html" data-worknet-guest>Iniciar sesión</a>
+      <a href="/Perfil%20Profesional/Iniciar_Sesion.html" data-worknet-logout>Cerrar sesión</a>
+    </div>
+  </nav>
+  <script src="/js/navegacion_cuenta.js" defer></script>
+
+  <main class="services-page">
+    <header class="services-heading">
+      <div>
+        <p class="eyebrow">TU ACTIVIDAD</p>
+        <h1>Historial de servicios</h1>
+        <p>Consulta los servicios que has solicitado y el estado de cada uno.</p>
+      </div>
+      <a class="new-service" href="/especialistas">＋ Solicitar un servicio</a>
+    </header>
+
+    <section class="services-panel" aria-labelledby="services-title">
+      <div class="panel-heading">
+        <div>
+          <h2 id="services-title">Mis servicios</h2>
+          <p id="services-count" aria-live="polite">Cargando servicios…</p>
+        </div>
+        <label class="filter-label" for="filter-status">Filtrar por estado</label>
+        <select id="filter-status">
+          <option value="">Todos los estados</option>
+          <option value="pendiente">Pendiente</option>
+          <option value="activo">Activo</option>
+          <option value="completado">Completado</option>
+          <option value="cancelado">Cancelado</option>
+          <option value="rechazado">Rechazado</option>
+        </select>
+      </div>
+      <div id="services-list" class="services-list" aria-live="polite">
+        <p class="message">Cargando servicios…</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/historial_servicios.js" defer></script>
+</body>
+</html>

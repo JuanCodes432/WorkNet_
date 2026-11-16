@@ -7,23 +7,12 @@
    servidor no responda, la página usa los datos de ejemplo (FALLBACK) para
    que se vea igual que el diseño.
 
-   Endpoints esperados (ajusta CONFIG.API_BASE_URL y las rutas a tu backend):
+   Endpoints disponibles:
 
-     GET  /api/me
-          → { "name": "Pepito", "city": "Popayán, Cauca" }
-
-     GET  /api/cities
-          → [ { "id": "popayan", "name": "Popayán, Cauca" }, ... ]
-
-     GET  /api/specialists/recommended?city=Popayán, Cauca
-          → [ { "id", "name", "profession", "description",
-                "photoUrl", "verified": true, "badge": "Más cercano" }, ... ]
-
-     GET  /api/categories
-          → [ { "id": "plomeria", "name": "Plomería", "icon": "droplets" }, ... ]
-          (icon: droplets | zap | laptop | house | wrench)
-
-     POST /api/specialists/:id/recommend   body: { "recommended": true|false }
+     GET /api/me/profile  → perfil de la cuenta autenticada
+     GET /api/cities      → ciudades disponibles
+     GET /api/especialistas
+         → [{ id, nombre, profesion, ciudad, descripcion }, ...]
    ========================================================================== */
 
 const CONFIG = {
@@ -31,10 +20,8 @@ const CONFIG = {
   REQUEST_TIMEOUT_MS: 6000,
   DEFAULT_CITY: 'Popayán, Cauca',
   CITY_STORAGE_KEY: 'worknet:city',
-  // Páginas a las que navega el front (cámbialas por tus rutas reales)
   PAGES: {
-    results: 'resultados.html',
-    profile: 'perfil.html',
+    results: '/especialistas',
   },
 };
 
@@ -85,6 +72,11 @@ const FALLBACK = {
 };
 
 const ALLOWED_ICONS = new Set(['droplets', 'zap', 'laptop', 'house', 'wrench']);
+const SPECIALIST_PHOTOS = {
+  'carlos gomez': 'img/carlos-gomez.png',
+  'juan david almeria': 'img/juan-david-almeria.png',
+  'david ruiz': 'img/david-ruiz.png',
+};
 
 /* ---------- Utilidades ---------- */
 
@@ -95,6 +87,14 @@ function esc(value) {
   return String(value ?? '').replace(/[&<>"']/g, (ch) => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
   }[ch]));
+}
+
+function normalizeText(value) {
+  return String(value ?? '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
 }
 
 /* Solo aceptamos URLs http(s) o rutas relativas para las fotos */
@@ -151,14 +151,24 @@ async function withFallback(request, fallback) {
 }
 
 const Api = {
-  getMe: () => withFallback(() => api('/me'), FALLBACK.me),
+  getMe: () => withFallback(() => api('/me/profile'), FALLBACK.me),
   getCities: () => withFallback(() => api('/cities'), FALLBACK.cities),
-  getCategories: () => withFallback(() => api('/categories'), FALLBACK.categories),
-  getRecommended: (city) =>
-    withFallback(
-      () => api(`/specialists/recommended?city=${encodeURIComponent(city)}`),
-      FALLBACK.specialists
-    ),
+  getCategories: async () => FALLBACK.categories,
+  getRecommended: (city) => withFallback(async () => {
+    const specialists = await api('/especialistas');
+    const cityName = normalizeText(city);
+    return specialists
+      .filter((specialist) => !cityName || normalizeText(specialist.ciudad) === cityName)
+      .map((specialist) => ({
+        id: specialist.id,
+        name: specialist.nombre,
+        profession: specialist.profesion,
+        description: specialist.descripcion,
+        photoUrl: SPECIALIST_PHOTOS[normalizeText(specialist.nombre)] || '',
+        verified: false,
+        badge: specialist.ciudad,
+      }));
+  }, FALLBACK.specialists),
   setRecommendation: (id, recommended) =>
     api(`/specialists/${encodeURIComponent(id)}/recommend`, {
       method: 'POST',
@@ -212,7 +222,10 @@ function skeletonCard() {
 }
 
 function specialistCard(s) {
-  const profileUrl = `${CONFIG.PAGES.profile}?id=${encodeURIComponent(s.id)}`;
+  const specialistUrl = `${CONFIG.PAGES.results}?${new URLSearchParams({
+    q: s.name,
+    city: state.city,
+  })}`;
   const photo = safeUrl(s.photoUrl);
   const badge = s.badge
     ? `<span class="badge-near">${icon('map-pin')}${esc(s.badge)}</span>`
@@ -223,12 +236,12 @@ function specialistCard(s) {
 
   return `
     <article class="card" data-id="${esc(s.id)}">
-      <a class="card__media" href="${esc(profileUrl)}" aria-label="Ver perfil de ${esc(s.name)}">
+      <a class="card__media" href="${esc(specialistUrl)}" aria-label="Buscar a ${esc(s.name)} en especialistas">
         ${photo ? `<img src="${esc(photo)}" alt="${esc(s.name)}, ${esc(s.profession)}" loading="lazy">` : ''}
         ${badge}
       </a>
       <div class="card__body">
-        <a class="card__identity" href="${esc(profileUrl)}">
+        <a class="card__identity" href="${esc(specialistUrl)}">
           <span class="card__name">${esc(s.name)} ${verified}</span>
           <span class="card__role">${esc(s.profession)}</span>
         </a>
@@ -242,7 +255,7 @@ function specialistCard(s) {
             <span class="stat" title="Popularidad" role="img" aria-label="Popularidad">${icon('chart')}</span>
             <span class="stat" title="Cerca de ti" role="img" aria-label="Cerca de ti">${icon('map-pin')}</span>
           </div>
-          <a class="btn btn--primary btn--sm" href="${esc(profileUrl)}">
+          <a class="btn btn--primary btn--sm" href="${esc(specialistUrl)}">
             ${icon('arrow-up-right', 17)}
             Ver más
           </a>
@@ -340,10 +353,10 @@ function bindEvents() {
 
   /* Botones de la barra superior: listos para conectar */
   $('#btn-notifications').addEventListener('click', () => {
-    // TODO: abrir panel de notificaciones (GET /api/notifications)
+    window.alert('No tienes notificaciones nuevas.');
   });
   $('#btn-account').addEventListener('click', () => {
-    // TODO: abrir menú de cuenta (perfil, ajustes, cerrar sesión)
+    window.location.assign('/Perfil%20Profesional/Perfil_Profesional.html');
   });
 }
 

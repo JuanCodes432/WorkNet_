@@ -8,9 +8,23 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/navegacion.css">
   <link rel="stylesheet" href="Styles_Pagina_Principal.css">
 </head>
 <body>
+
+  <nav class="worknet-nav" aria-label="Navegación principal">
+    <a class="worknet-nav__brand" href="/">WorkNet</a>
+    <div class="worknet-nav__links">
+      <a href="/" aria-current="page">Inicio</a>
+      <a href="/resenas">Reseñas</a>
+      <a href="/historial-servicios" data-worknet-session>Historial de servicios</a>
+      <a href="/Perfil%20Profesional/Perfil_Profesional.html" data-worknet-session>Perfil</a>
+      <a href="/Perfil%20Profesional/Crear_Perfil.html" data-worknet-guest>Crear perfil</a>
+      <a href="/Perfil%20Profesional/Iniciar_Sesion.html" data-worknet-guest>Iniciar sesión</a>
+      <a href="/Perfil%20Profesional/Iniciar_Sesion.html" data-worknet-logout>Cerrar sesión</a>
+    </div>
+  </nav>
 
   <!-- Iconos (estilo Lucide, los mismos nombres que usa el diseño en Figma) -->
   <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -37,7 +51,7 @@
   <!-- Barra superior -->
   <header class="topbar">
     <nav class="breadcrumb" aria-label="Ruta de navegación">
-      <a href="Pagina_Principal.html">Worknet</a>
+      <a href="/">Worknet</a>
       <svg class="icon icon--13" aria-hidden="true"><use href="#i-chevron-right"/></svg>
       <span aria-current="page">Inicio</span>
     </nav>
@@ -117,7 +131,7 @@
           <h2 id="rec-title">Te recomendamos</h2>
           <p>Especialistas cerca de ti, listos para ayudarte.</p>
         </div>
-        <a class="link-more" id="link-more-specialists" href="resultados.html">
+        <a class="link-more" id="link-more-specialists" href="/especialistas">
           Mostrar más
           <svg class="icon icon--16" aria-hidden="true"><use href="#i-arrow-right"/></svg>
         </a>
@@ -129,7 +143,7 @@
     <section class="block block--tight" aria-labelledby="cat-title">
       <div class="block__head">
         <h2 id="cat-title">¿Qué necesitas resolver?</h2>
-        <a class="link-more" href="especialidades.html">
+        <a class="link-more" href="#cat-title">
           Ver especialidades
           <svg class="icon icon--16" aria-hidden="true"><use href="#i-arrow-right"/></svg>
         </a>
@@ -143,11 +157,12 @@
         <svg class="icon icon--23 icon--primary" aria-hidden="true"><use href="#i-shield-check"/></svg>
         Conoce su perfil, consulta reseñas y conversa antes de decidir.
       </p>
-      <a class="trust__link" href="como-funciona.html">Así funciona Worknet ↗</a>
+      <a class="trust__link" href="/resenas">Consulta las reseñas ↗</a>
     </aside>
 
   </main>
 
   <script src="Java_Pagina_Principal.js"></script>
+  <script src="../js/navegacion_cuenta.js" defer></script>
 </body>
 </html>

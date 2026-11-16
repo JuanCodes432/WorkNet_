@@ -1,3 +1,7 @@
+:root {
+  --worknet-nav-height: 52px;
+}
+
 .worknet-nav {
   position: sticky;
   top: 0;
@@ -61,6 +65,11 @@
   display: none;
 }
 
+.worknet-nav__links [hidden],
+.login-card__footer [hidden] {
+  display: none !important;
+}
+
 .worknet-nav[data-session-state="guest"] .worknet-nav__links [data-worknet-guest] {
   display: inline-flex;
 }
@@ -70,31 +79,53 @@
   display: inline-flex;
 }
 
+.login-card__footer [data-worknet-guest] {
+  display: none;
+}
+
+html[data-session-state="guest"] .login-card__footer [data-worknet-guest] {
+  display: inline;
+}
+
 .worknet-nav + .app-shell .sidebar {
-  top: 52px;
+  top: var(--worknet-nav-height);
 }
 
 .worknet-nav + .layout .sidebar {
-  top: 52px;
-  height: calc(100vh - 52px);
+  top: var(--worknet-nav-height);
+  height: calc(100vh - var(--worknet-nav-height));
 }
 
-@media (max-width: 520px) {
+@media (max-width: 760px) {
+  :root {
+    --worknet-nav-height: 80px;
+  }
+
   .worknet-nav {
-    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 4px 12px;
     padding: 8px 12px;
+    min-height: var(--worknet-nav-height);
   }
 
   .worknet-nav__links {
-    gap: 0;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scrollbar-width: thin;
+    flex: 1 1 100%;
+    gap: 2px;
+    flex-wrap: wrap;
+    overflow: visible;
   }
 
   .worknet-nav__links a {
     flex-shrink: 0;
-    padding: 8px 7px;
+    padding: 6px 5px;
+    font-size: 13px;
     white-space: nowrap;
+  }
+}
+
+@media (max-width: 520px) {
+  :root {
+    --worknet-nav-height: 112px;
   }
 }

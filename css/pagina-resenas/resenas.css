@@ -177,7 +177,9 @@ a:focus-visible {
 }
 
 .main-nav button,
-.activity button {
+.main-nav a,
+.activity button,
+.activity a {
   display: flex;
   width: 100%;
   height: 44px;
@@ -188,6 +190,7 @@ a:focus-visible {
   border-radius: 12px;
   background: var(--fondo-tarjeta);
   color: var(--texto-suave);
+  text-decoration: none;
   font-weight: 500;
   font-size: 13px;
   text-align: left;
@@ -197,7 +200,9 @@ a:focus-visible {
 }
 
 .main-nav button:hover,
-.activity button:hover {
+.main-nav a:hover,
+.activity button:hover,
+.activity a:hover {
   background: var(--fondo);
   color: var(--primario);
 }
@@ -224,7 +229,8 @@ a:focus-visible {
   font-size: 10px;
 }
 
-.activity button {
+.activity button,
+.activity a {
   height: 40px;
   font-weight: 400;
   font-size: 12px;
@@ -975,7 +981,7 @@ a:focus-visible {
   .mobile-menu-button {
     position: fixed;
     z-index: 50;
-    top: 21px;
+    top: calc(var(--worknet-nav-height, 52px) + 8px);
     left: 18px;
     display: flex;
     width: 42px;

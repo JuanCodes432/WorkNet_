@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="/css/pagina-resenas/resenas.css">
-  <link rel="stylesheet" href="/css/navegacion.css">
+  <link rel="stylesheet" href="../../css/pagina-resenas/resenas.css">
+  <link rel="stylesheet" href="../../css/navegacion.css">
 </head>
 <body>
 
@@ -20,12 +20,13 @@
     <div class="worknet-nav__links">
       <a href="/">Inicio</a>
       <a href="/resenas" aria-current="page">Reseñas</a>
+      <a href="/historial-servicios" data-worknet-session>Historial de servicios</a>
       <a href="/Perfil%20Profesional/Perfil_Profesional.html" data-worknet-session>Perfil</a>
       <a href="/Perfil%20Profesional/Crear_Perfil.html" data-worknet-guest>Crear perfil</a>
       <a href="/Perfil%20Profesional/Iniciar_Sesion.html" data-worknet-guest>Iniciar sesión</a>
       <a href="/Perfil%20Profesional/Iniciar_Sesion.html" data-worknet-logout>Cerrar sesión</a>
     </div>
-    <script src="/js/navegacion_cuenta.js" defer></script>
+    <script src="../../js/navegacion_cuenta.js" defer></script>
   </nav>
 
   <div class="app-shell">
@@ -53,24 +54,18 @@
         </section>
 
         <!-- Navegación principal -->
-        <nav class="main-nav" aria-label="Navegación principal">
-          <button type="button" data-aviso="Abriendo Inicio">
-            <span>Inicio</span>
-          </button>
-          <button type="button" data-aviso="Abriendo Mensajes">
+        <nav class="main-nav" aria-label="Accesos rápidos">
+          <a href="/resenas">
             <span>Mensajes</span>
-          </button>
-          <button type="button" data-aviso="Abriendo Mi perfil">
-            <span>Mi perfil</span>
-          </button>
+          </a>
         </nav>
 
         <!-- Actividad -->
         <section class="activity">
           <span class="eyebrow">ACTIVIDAD</span>
-          <button type="button" data-aviso="Abriendo Generar recibo">
+          <a href="/contrato">
             <span>Generar recibo</span>
-          </button>
+          </a>
         </section>
       </div>
     </aside>
@@ -251,6 +246,6 @@
     <div class="notice" id="aviso" role="status" aria-live="polite"></div>
   </div>
 
-  <script src="/js/resenas.js"></script>
+  <script src="../../js/resenas.js"></script>
 </body>
 </html>

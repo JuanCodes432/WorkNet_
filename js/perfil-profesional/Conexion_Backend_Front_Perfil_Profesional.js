@@ -7,7 +7,6 @@
   async function solicitarApi(path, options = {}) {
     const controller = new AbortController();
     const timeout = window.setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
-
     try {
       const response = await window.fetch(`${API_BASE_URL}${path}`, {
         credentials: "same-origin",

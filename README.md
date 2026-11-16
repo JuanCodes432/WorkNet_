@@ -20,9 +20,10 @@ python pypi.py
 ```
 
 Abre <http://127.0.0.1:5000/contrato> para generar y exportar recibos PDF.
-La API y el formulario deben usar el mismo servidor; no abras `Contrato.html`
-directamente ni uses Live Server. Para ver la p?gina de rese?as, abre
-<http://127.0.0.1:5000/>. Tambi?n puedes abrir Crear perfil en
+La API y el formulario deben usar el mismo servidor; no abras `html/Contrato.html`
+directamente ni uses Live Server. La ruta de inicio `/` abre
+`Pagina_Principal/Pagina_Principal.html`. Para ver rese?as, abre
+<http://127.0.0.1:5000/resenas>. Tambi?n puedes abrir Crear perfil en
 <http://127.0.0.1:5000/Perfil%20Profesional/Crear_Perfil.html> o iniciar sesi?n
 en <http://127.0.0.1:5000/Perfil%20Profesional/Iniciar_Sesion.html>.
 
@@ -59,7 +60,12 @@ cargan ?nicamente cuando sus archivos correspondientes est?n vac?os.
 
 ## Rutas web
 
-- `GET /`: inicio.
+Los archivos de páginas están en `html/`, las hojas de estilo en `css/` y los
+scripts JavaScript en `js/`. Las secciones de perfil y cuenta eliminada están
+agrupadas en subcarpetas con el mismo nombre en cada tipo de archivo.
+
+- `GET /`: redirige a la página principal `Pagina_Principal/Pagina_Principal.html`.
+- `GET /Pagina_Principal/<archivo>`: sirve la página principal y sus recursos.
 - `GET /resenas`: rese?as.
 - `GET /Perfil%20Profesional/Perfil_Profesional.html`: perfil profesional y
   p?ginas est?ticas de esa carpeta.
@@ -67,6 +73,7 @@ cargan ?nicamente cuando sus archivos correspondientes est?n vac?os.
 - `GET /Perfil%20Profesional/Iniciar_Sesion.html`: inicio de sesi?n.
 - `GET /contrato`: generar contrato.
 - `GET /historial-contratos`: historial.
+- `GET /historial-servicios`: historial de servicios de la cuenta activa.
 - `GET /Cuenta%20Eliminada/cuenta_eliminada.html`: confirmaci?n de cuenta
   eliminada.
 

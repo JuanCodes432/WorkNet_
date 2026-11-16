@@ -118,7 +118,11 @@ def create_app():
 
     @flask_app.get("/")
     def inicio():
-        return redirect("/resenas")
+        return redirect("/Pagina_Principal/Pagina_Principal.html")
+
+    @flask_app.get("/Pagina_Principal/<path:archivo>")
+    def servir_pagina_principal(archivo):
+        return send_from_directory(RAIZ_PROYECTO / "Pagina_Principal", archivo)
 
     @flask_app.get("/resenas")
     def pagina_resenas():
@@ -129,19 +133,29 @@ def create_app():
 
     @flask_app.get("/contrato")
     def pagina_contrato():
-        return send_from_directory(RAIZ_PROYECTO, "Contrato.html")
+        return send_from_directory(RAIZ_PROYECTO / "html", "Contrato.html")
 
     @flask_app.get("/especialistas")
     def pagina_especialistas():
-        return send_from_directory(RAIZ_PROYECTO, "especialistas.html")
+        return send_from_directory(RAIZ_PROYECTO / "html", "especialistas.html")
 
     @flask_app.get("/contratar")
     def pagina_contratar():
-        return send_from_directory(RAIZ_PROYECTO, "contratar.html")
+        return send_from_directory(RAIZ_PROYECTO / "html", "contratar.html")
 
     @flask_app.get("/historial-contratos")
     def pagina_historial_contratos():
-        return send_from_directory(RAIZ_PROYECTO, "historial_contratos.html")
+        return send_from_directory(
+            RAIZ_PROYECTO / "html",
+            "historial_contratos.html",
+        )
+
+    @flask_app.get("/historial-servicios")
+    def pagina_historial_servicios():
+        return send_from_directory(
+            RAIZ_PROYECTO / "html",
+            "historial_servicios.html",
+        )
 
     @flask_app.get("/Perfil Profesional/")
     def perfil_profesional():
@@ -149,11 +163,17 @@ def create_app():
 
     @flask_app.get("/Perfil Profesional/<path:archivo>")
     def servir_perfil_profesional(archivo):
-        return send_from_directory(RAIZ_PROYECTO / "Perfil Profesional", archivo)
+        return send_from_directory(
+            RAIZ_PROYECTO / "html" / "perfil-profesional",
+            archivo,
+        )
 
     @flask_app.get("/Cuenta Eliminada/<path:archivo>")
     def servir_cuenta_eliminada(archivo):
-        return send_from_directory(RAIZ_PROYECTO / "Cuenta Eliminada", archivo)
+        return send_from_directory(
+            RAIZ_PROYECTO / "html" / "cuenta-eliminada",
+            archivo,
+        )
 
     @flask_app.get("/css/<path:archivo>")
     def servir_css(archivo):

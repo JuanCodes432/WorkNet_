@@ -9,7 +9,6 @@ const CONFIG = {
     messages: '/resenas',
     receipt: '/contrato',
     editProfile: '/Perfil%20Profesional/Perfil_Profesional.html',
-    visits: '/historial-contratos',
   },
 };
 

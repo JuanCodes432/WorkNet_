@@ -7,6 +7,17 @@
 
   function mostrarSesionActiva(activa) {
     nav.dataset.sessionState = activa ? "authenticated" : "guest";
+    document.documentElement.dataset.sessionState = activa
+      ? "authenticated"
+      : "guest";
+    document.querySelectorAll("[data-worknet-guest]").forEach((elemento) => {
+      elemento.hidden = activa;
+    });
+    document
+      .querySelectorAll("[data-worknet-session], [data-worknet-logout]")
+      .forEach((elemento) => {
+        elemento.hidden = !activa;
+      });
   }
 
   async function consultarSesion() {

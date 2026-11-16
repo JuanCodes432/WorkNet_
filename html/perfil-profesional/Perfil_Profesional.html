@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/Perfil%20Profesional/Styles_Perfil_Profesional.css">
-  <link rel="stylesheet" href="/css/navegacion.css">
+  <link rel="stylesheet" href="../../css/perfil-profesional/Styles_Perfil_Profesional.css">
+  <link rel="stylesheet" href="../../css/navegacion.css">
 </head>
 <body class="is-loading">
 
@@ -18,6 +18,7 @@
     <div class="worknet-nav__links">
       <a href="/">Inicio</a>
       <a href="/resenas">Reseñas</a>
+      <a href="/historial-servicios" data-worknet-session>Historial de servicios</a>
       <a href="/Perfil%20Profesional/Perfil_Profesional.html" data-worknet-session aria-current="page">Perfil</a>
       <a href="/Perfil%20Profesional/Crear_Perfil.html" data-worknet-guest>Crear perfil</a>
       <a href="/Perfil%20Profesional/Iniciar_Sesion.html" data-worknet-guest>Iniciar sesión</a>
@@ -67,19 +68,11 @@
           <p class="account-card__uni" id="side-uni">Universidad del Cauca</p>
         </section>
 
-        <nav class="menu" aria-label="Menú principal">
-          <a class="menu__link" data-page="home" href="Pagina_Principal.html">
-            <svg class="icon icon--20" aria-hidden="true"><use href="#i-house"/></svg>
-            Inicio
-          </a>
+        <nav class="menu" aria-label="Accesos rápidos">
           <a class="menu__link" data-page="messages" href="mensajes.html">
             <svg class="icon icon--20" aria-hidden="true"><use href="#i-messages-square"/></svg>
             Mensajes
             <span class="menu__dot" id="unread-dot" role="img" aria-label="Mensajes nuevos"></span>
-          </a>
-          <a class="menu__link is-active" href="/Perfil%20Profesional/Perfil_Profesional.html" aria-current="page">
-            <svg class="icon icon--20" aria-hidden="true"><use href="#i-user-round"/></svg>
-            Mi perfil
           </a>
         </nav>
 
@@ -99,7 +92,7 @@
       <!-- Barra superior -->
       <header class="topbar">
         <nav class="breadcrumb" aria-label="Ruta de navegación">
-          <a data-page="home" href="Pagina_Principal.html">Worknet</a>
+          <a data-page="home" href="/">Worknet</a>
           <svg class="icon icon--13" aria-hidden="true"><use href="#i-chevron-right"/></svg>
           <span aria-current="page">Perfil profesional</span>
         </nav>
@@ -231,11 +224,7 @@
               </div>
               <p class="stat-big" id="punct-value">39 de 40</p>
               <p class="stat-detail">visitas realizadas a tiempo.</p>
-              <a class="chip chip--link" data-page="visits" href="historial-visitas.html">
-                <svg class="icon icon--13" aria-hidden="true"><use href="#i-calendar-check"/></svg>
-                Historial de visitas
-              </a>
-              <p class="stat-note">Un historial que te ayuda a elegir con más información.</p>
+              <p class="stat-note">Consulta tus servicios desde el enlace del menú superior.</p>
             </section>
           </aside>
         </div>
@@ -314,8 +303,8 @@
     </form>
   </dialog>
 
-  <script src="/js/navegacion_cuenta.js" defer></script>
-  <script src="/Perfil%20Profesional/Conexion_Backend_Front_Perfil_Profesional.js"></script>
-  <script src="/Perfil%20Profesional/Java_Perfil_Profesional.js"></script>
+  <script src="../../js/navegacion_cuenta.js" defer></script>
+  <script src="../../js/perfil-profesional/Conexion_Backend_Front_Perfil_Profesional.js"></script>
+  <script src="../../js/perfil-profesional/Java_Perfil_Profesional.js"></script>
 </body>
 </html>
