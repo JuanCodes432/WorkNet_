@@ -16,68 +16,244 @@
                     </div>
                 </div>
 
-                <div class="recibo-preview">
-                    <div class="datos-recibo">
-                        <div class="dato-recibo">
-                            <label>CLIENTE</label>
-                            <p id="Pcliente">?</p>
-                        </div>
+                <div class="distribucion">
 
-                        <div class="dato-recibo">
-                            <label>PROFESIONAL</label>
-                            <p id="Pprofesional">?</p>
-                        </div>
+                    <!-- FORMULARIO -->
+                    <section class="formulario">
 
-                        <div class="dato-recibo">
-                            <label>SERVICIO</label>
-                            <p id="Pservicio">?</p>
-                        </div>
+                        <form id="formRecibo">
 
-                        <div class="dato-recibo">
-                            <label>ALCANCE</label>
-                            <p id="Palcance">?</p>
-                        </div>
+                            <!-- SECCION 1 -->
+                            <div class="seccion">
 
-                        <div class="dato-recibo">
-                            <label>FECHA DEL SERVICIO</label>
-                            <p id="PfechaServicio">?</p>
-                        </div>
+                                <h3><span>1</span> ¿Quiénes acuerdan el servicio?</h3>
 
-                        <div class="dato-recibo">
-                            <label>HORA</label>
-                            <p id="Phora">?</p>
-                        </div>
+                                <div class="fila">
 
-                        <div class="dato-recibo">
-                            <label>LUGAR DEL SERVICIO</label>
-                            <p id="Plugar">?</p>
-                        </div>
+                                    <div class="campo">
+                                        <label>Cliente</label>
+                                        <input type="text" id="R0" readonly>
+                                    </div>
 
-                        <div class="dato-recibo">
-                            <label>IMPORTE</label>
-                            <p id="Pimporte">0</p>
-                        </div>
+                                    <div class="campo">
+                                        <label>Profesional</label>
 
-                        <div class="dato-recibo">
-                            <label>CONDICIONES ACORDADAS</label>
-                            <p id="Pcondiciones"></p>
-                        </div>
+                                        <input type="text" id="R1" >
+                                    </div>
 
-                        <hr>
+                                </div>
 
-                        <div class="advertencia-recibo">
-                            <strong>Este documento no es un comprobante de pago.</strong>
+                                <p class="ubicacion-perfil">
+                                    📍 Plomero - Popayán, Cauca
+                                </p>
 
-                            <p>
-                                Registra ?nicamente las condiciones del servicio.
-                                No acredita entrega de dinero ni reemplaza una factura.
-                                Su generaci?n no implica la aceptaci?n de la otra parte.
+                            </div>
+
+
+                            <!-- SECCION 2 -->
+                            <div class="seccion">
+
+                                <h3><span>2</span> Servicio y alcance</h3>
+
+                                <div class="campo">
+                                    <label>Servicio acordado</label>
+                                    <input type="text" id="R2"
+                                        >
+                                </div>
+
+                                <div class="campo">
+                                    <label>¿Qué se va a realizar?</label>
+
+                                    <textarea id="R3" rows="3"></textarea>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- SECCION 3 -->
+                            <div class="seccion">
+
+                                <h3><span>3</span> Fecha y lugar del servicio</h3>
+
+                                <div class="fila">
+
+                                    <div class="campo">
+                                        <label>Fecha del servicio</label>
+                                        <input type="date" id="R4">
+                                    </div>
+
+                                    <div class="campo">
+                                        <label>Hora acordada</label>
+                                        <input type="time" id="R5" >
+                                    </div>
+
+                                </div>
+
+                                <div class="campo">
+                                    <label>Dirección</label>
+                                    <input type="text" id="R6"
+                                        >
+                                </div>
+
+                            </div>
+
+
+                            <!-- SECCION 4 -->
+                            <div class="seccion">
+
+                                <h3><span>4</span> Importe y condiciones acordadas</h3>
+
+                                <div class="fila">
+
+                                    <div class="campo">
+                                        <label>Importe total acordado</label>
+                                        <input type="number" id="R7" min="0"
+                                            >
+                                    </div>
+
+                                    
+
+                                </div>
+
+                                <div class="campo">
+                                    <label>Materiales, exclusiones y otras condiciones</label>
+
+                                    <textarea id="R9" rows="4"></textarea>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="nota-final">
+                                Revisa que los datos coincidan con lo conversado.
+                                Generar el recibo no implica la aceptación de la otra persona.
+                            </div>
+
+
+                            <div class="botones">
+                                <input type="button" value="Cancelar" id="cancelar"
+                                    onclick="cancelarRecibo()">
+
+                                <input type="button" value="Generar recibo"
+                                    id="generar" onclick="generarRecibo()">
+                            </div>
+
+                        </form>
+
+                    </section>
+
+
+                    <!-- VISTA PREVIA -->
+                    <section class="vista-previa">
+
+                        <h3>◉ &nbsp; Vista previa del recibo</h3>
+
+                        <div class="recibo">
+
+                            <div class="recibo-encabezado">
+
+                                <h2>worknet</h2>
+                                <span>ACUERDO DE SERVICIO</span>
+
+                            </div>
+
+                            <div class="linea-azul"></div>
+
+                            <h2>Recibo de acuerdo</h2>
+
+                            <p class="fecha-elaboracion">
+                                Elaborado el <span id="Pfecha"></span>
                             </p>
-                        </div>
-                    </div>
 
-                    <input type="button" value="? Exportar a PDF"
-                        id="descargar" onclick="descargarRecibo()">
+
+                            <div class="fila-recibo">
+
+                                <div>
+                                    <label>CLIENTE</label>
+                                    <p id="Pcliente"></p>
+                                </div>
+
+                                <div>
+                                    <label>PROFESIONAL</label>
+                                    <p id="Pprofesional"></p>
+                                    
+                                </div>
+
+                            </div>
+
+                            <hr>
+
+
+                            <div class="dato-recibo">
+                                <label>SERVICIO ACORDADO</label>
+                                <p id="Pservicio"></p>
+                            </div>
+
+
+                            <div class="dato-recibo">
+                                <label>ALCANCE DEL SERVICIO</label>
+                                <p id="Palcance">
+                                   
+                                </p>
+                            </div>
+
+
+                            <div class="fila-recibo">
+
+                                <div>
+                                    <label>FECHA DEL SERVICIO</label>
+                                    <p id="PfechaServicio"></p>
+                                </div>
+
+                                <div>
+                                    <label>HORA</label>
+                                    <p id="Phora"></p>
+                                </div>
+
+                            </div>
+
+
+                            <div class="dato-recibo">
+                                <label>LUGAR DEL SERVICIO</label>
+                                <p id="Plugar"></p>
+                            </div>
+
+
+                            <div class="importe">
+                                <span>Importe total acordado</span>
+                                <strong id="Pimporte"> <small>COP</small></strong>
+                            </div>
+
+
+                            <div class="dato-recibo">
+                                <label>CONDICIONES ACORDADAS</label>
+                                <p id="Pcondiciones">
+                                    
+                                </p>
+                            </div>
+
+                            <hr>
+
+                            <div class="advertencia-recibo">
+                                <strong>Este documento no es un comprobante de pago.</strong>
+
+                                <p>
+                                    Registra únicamente las condiciones del servicio.
+                                    No acredita entrega de dinero ni reemplaza una factura.
+                                    Su generación no implica la aceptación de la otra parte.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <input type="button" value="Exportar a PDF"
+                            id="descargar" onclick="descargarRecibo()">
+
+                    </section>
+
                 </div>
             </section>
         </main>

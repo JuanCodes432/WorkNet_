@@ -1,8 +1,4 @@
-
 const API_CONTRATOS = "/api/contratos";
-const MENSAJE_SERVIDOR_INCORRECTO = "Inicia Flask con `python py\\api.py` "
-    + "y abre http://127.0.0.1:5000/contrato. No abras Contrato.html "
-    + "directamente ni uses Live Server.";
 
 document.addEventListener("DOMContentLoaded", () => {
     const campos = [
@@ -20,8 +16,32 @@ document.addEventListener("DOMContentLoaded", () => {
         "change", actualizarVistaPrevia
     );
 
+    cargarPerfilCliente();
     actualizarVistaPrevia();
 });
+
+async function cargarPerfilCliente() {
+    try {
+        const respuesta = await fetch(API_PERFIL);
+        const perfil = await respuesta.json();
+
+        if (respuesta.status === 401) {
+            alert("Inicia sesión para contratar un servicio.");
+            window.location.href = "/Perfil%20Profesional/Iniciar_Sesion.html";
+            return;
+        }
+        if (!respuesta.ok) {
+            throw new Error(perfil.error || "No se pudo consultar tu perfil.");
+        }
+
+        document.getElementById("R0").value = perfil.name;
+        perfilClienteCargado = true;
+        actualizarVistaPrevia();
+    } catch (error) {
+        console.error(error);
+        alert(error.message);
+    }
+}
 
 function obtenerValor(id) {
     return document.getElementById(id).value.trim();

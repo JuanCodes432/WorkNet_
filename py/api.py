@@ -22,7 +22,12 @@ from contratos import (
     fn_modificar_contrato,
 )
 from contratos.contrato_pdf import generar_pdf_recibo
-from contratos.contrato_rutas import contrato_bp
+from contratos.contrato_rutas import (
+    contrato_bp,
+    demo_contratos_bp,
+    especialistas_bp,
+    mis_contratos_bp,
+)
 from cuentas.cuenta_rutas import cuenta_bp
 from resenas import (
     fn_consultar_resenas_especialista,
@@ -44,13 +49,13 @@ def _leer_datos_json():
 
 
 def _error_datos_invalidos():
-    return jsonify({"error": "El cuerpo debe ser un objeto JSON v?lido"}), 400
+    return jsonify({"error": "El cuerpo debe ser un objeto JSON válido"}), 400
 
 
 def _validar_datos_recibo(datos):
     for campo in ("cliente", "especialista", "servicio"):
         if not isinstance(datos.get(campo), str) or not datos[campo].strip():
-            raise ValueError(f"{campo.capitalize()} no puede estar vac?o")
+            raise ValueError(f"{campo.capitalize()} no puede estar vacío")
 
     campos_texto = (
         "cliente",
@@ -67,13 +72,13 @@ def _validar_datos_recibo(datos):
 
     precio = datos.get("precio")
     if isinstance(precio, bool) or not isinstance(precio, (int, float)):
-        raise ValueError("El precio debe ser un n?mero mayor que cero")
+        raise ValueError("El precio debe ser un número mayor que cero")
     try:
         precio_valido = math.isfinite(precio) and precio > 0
     except OverflowError:
         precio_valido = False
     if not precio_valido:
-        raise ValueError("El precio debe ser un n?mero mayor que cero")
+        raise ValueError("El precio debe ser un número mayor que cero")
 
 
 def _respuesta_pdf_recibo(datos, numero, nombre_archivo):
@@ -105,6 +110,9 @@ def create_app():
     )
 
     flask_app.register_blueprint(contrato_bp)
+    flask_app.register_blueprint(mis_contratos_bp)
+    flask_app.register_blueprint(demo_contratos_bp)
+    flask_app.register_blueprint(especialistas_bp)
     flask_app.register_blueprint(resena_bp)
     flask_app.register_blueprint(cuenta_bp)
 
@@ -122,6 +130,14 @@ def create_app():
     @flask_app.get("/contrato")
     def pagina_contrato():
         return send_from_directory(RAIZ_PROYECTO, "Contrato.html")
+
+    @flask_app.get("/especialistas")
+    def pagina_especialistas():
+        return send_from_directory(RAIZ_PROYECTO, "especialistas.html")
+
+    @flask_app.get("/contratar")
+    def pagina_contratar():
+        return send_from_directory(RAIZ_PROYECTO, "contratar.html")
 
     @flask_app.get("/historial-contratos")
     def pagina_historial_contratos():
@@ -166,12 +182,11 @@ def create_app():
         except ValueError as error:
             return jsonify({"error": str(error)}), 400
 
-        descripcion = "
-".join([
+        descripcion = "\n".join([
             f"Alcance: {datos.get('alcance', '')}",
             f"Fecha del servicio: {datos.get('fecha', '')}",
             f"Hora: {datos.get('hora', '')}",
-            f"Direcci?n: {datos.get('direccion', '')}",
+            f"Dirección: {datos.get('direccion', '')}",
             f"Condiciones: {datos.get('condiciones', '')}",
         ])
 
